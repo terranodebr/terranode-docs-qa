@@ -923,8 +923,8 @@ como enviar dezenas de arquivos, convidar uma lista de pessoas ou integrar o
 terranode a um pipeline. Tudo o que ela faz também pode ser feito pela API.</p>
 <p><code>tn</code> é o cliente de linha de comando do terranode. Com ele você entra na sua
 conta, administra membros, convites, chaves de API e dispositivos da
-organização, cria catálogos e envia arquivos a partir de um terminal ou de um
-script. Tudo o que o <code>tn</code> faz passa pela mesma API pública descrita em
+organização, cria catálogos, envia arquivos e cria e acompanha projetos a
+partir de um terminal ou de um script. Tudo o que o <code>tn</code> faz passa pela mesma API pública descrita em
 <a href="../api/">API e SDK</a>.</p>
 <div class="admonition note">
 <p class="admonition-title">Ainda não está no pip</p>
@@ -970,6 +970,30 @@ está autenticado. A matriz completa está em
 <td>sim</td>
 <td>não</td>
 <td>não</td>
+</tr>
+<tr>
+<td><code>projects list</code>, <code>get</code>, <code>bundles list</code>, <code>stats</code>, <code>daily</code>, <code>team</code>, <code>events</code>, <code>responses list</code>, <code>summary</code>, <code>get</code></td>
+<td>sim</td>
+<td>sim</td>
+<td>sim</td>
+</tr>
+<tr>
+<td><code>projects create</code> e <code>archive</code></td>
+<td>sim</td>
+<td>sim</td>
+<td>não</td>
+</tr>
+<tr>
+<td><code>projects update</code>, <code>bundles retry</code></td>
+<td>criador ou gestor do projeto</td>
+<td>criador ou gestor do projeto</td>
+<td>criador ou gestor do projeto</td>
+</tr>
+<tr>
+<td><code>projects responses review</code></td>
+<td>gestor ou revisor do projeto</td>
+<td>gestor ou revisor do projeto</td>
+<td>gestor ou revisor do projeto</td>
 </tr>
 </tbody>
 </table></div>
@@ -1086,10 +1110,11 @@ com a dica de rodar <code>tn auth login</code> ou definir <code>TN_TOKEN</code>.
 comando. <code>tn --install-completion</code> instala o autocompletar do seu shell.</p>
 <h2 id="refs-id-ou-slug">Refs: id ou slug<a class="headerlink" href="#refs-id-ou-slug" title="Permanent link">&para;</a></h2>
 <p>Um ref é o valor que você digita para identificar algo. Organizações,
-catálogos e fontes de dados aceitam tanto o id (UUID, estável) quanto o slug
+catálogos, fontes de dados e projetos aceitam tanto o id (UUID, estável) quanto o slug
 mostrado nas listagens. Envios, chaves de API e dispositivos não têm slug e
 são sempre identificados pelo id. Membros e convites são identificados pelo
-e-mail.</p>
+e-mail. Uma coleta é identificada pelo id ou pelo número que aparece no web
+app, como <code>RDO-DNIT097-00139</code>.</p>
 <p>Slugs são mais fáceis de digitar, mas podem mudar quando alguém renomeia o
 recurso. Em scripts de longa duração, use ids.</p>
 <h2 id="arvore-de-comandos">Árvore de comandos<a class="headerlink" href="#arvore-de-comandos" title="Permanent link">&para;</a></h2>
@@ -1106,9 +1131,25 @@ tn catalogs     list [--q &lt;texto&gt;] | get &lt;catalogo&gt; | create --name 
 tn datasources  list &lt;catalogo&gt; | get &lt;catalogo&gt; &lt;fonte&gt; | delete &lt;catalogo&gt; &lt;fonte&gt;
 tn uploads      create &lt;catalogo&gt; &lt;arquivo&gt; [--wait] | list &lt;catalogo&gt;
                 | get &lt;catalogo&gt; &lt;id&gt; [--wait] | delete &lt;catalogo&gt; &lt;id&gt;
+tn projects     list [--q &lt;texto&gt;] [--survey &lt;formulario&gt;] | get &lt;projeto&gt;
+                | create --name &lt;nome&gt; [--slug] [--kind] [--description] [--deadline]
+                  [--requires-review] [--area &lt;arquivo&gt;]
+                | update &lt;projeto&gt; [--name] [--slug] [--kind] [--description]
+                  [--deadline | --clear-deadline] [--requires-review | --no-requires-review]
+                  [--area &lt;arquivo&gt; | --clear-area]
+                | archive &lt;projeto&gt;
+                | stats &lt;projeto&gt; [--tz] | team &lt;projeto&gt; [--tz]
+                | daily &lt;projeto&gt; (--days N | --all) [--collector &lt;pessoa&gt;] [--tz]
+tn projects bundles   list &lt;projeto&gt; | retry &lt;projeto&gt;
+tn projects events    list &lt;projeto&gt; [filtros] | summary &lt;projeto&gt; [filtros]
+                      | export &lt;projeto&gt; -o &lt;arquivo.csv&gt; [--force] [filtros]
+tn projects responses list &lt;projeto&gt; [--state] [--q] [--collector] [--survey]
+                      | summary &lt;projeto&gt; [--q] [--collector] [--survey]
+                      | get &lt;projeto&gt; &lt;coleta&gt;
+                      | review &lt;projeto&gt; COLETA... (--approve | --reject | --reopen) [--comment]
 </code></pre></div>
 <p><code>&lt;papel&gt;</code> é sempre <code>owner</code>, <code>editor</code> ou <code>field</code>. Não existem comandos para
-projetos, formulários ou integrações.</p>
+formulários ou integrações.</p>
 <h3 id="membros-e-convites">Membros e convites<a class="headerlink" href="#membros-e-convites" title="Permanent link">&para;</a></h3>
 <div class="codehilite"><pre><span></span><code>tn<span class="w"> </span>orgs<span class="w"> </span>members<span class="w"> </span>set-role<span class="w"> </span>ana@exemplo.com<span class="w"> </span>editor
 tn<span class="w"> </span>orgs<span class="w"> </span>members<span class="w"> </span>remove<span class="w"> </span>ana@exemplo.com
@@ -1162,6 +1203,157 @@ e erros de processamento estão em
 <a href="../../catalogos/importar-dados/">Importar dados</a>.</p>
 <p>Fontes de dados nunca são criadas ou editadas pelo <code>tn</code>: elas nascem de um
 envio concluído. <code>datasources delete</code> remove a fonte e seus dados.</p>
+<h3 id="projetos">Projetos<a class="headerlink" href="#projetos" title="Permanent link">&para;</a></h3>
+<div class="codehilite"><pre><span></span><code>tn<span class="w"> </span>projects<span class="w"> </span>create<span class="w"> </span>--name<span class="w"> </span><span class="s2">&quot;Obra BR-101&quot;</span><span class="w"> </span>--deadline<span class="w"> </span><span class="m">2026</span>-12-31<span class="w"> </span>--requires-review<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--area<span class="w"> </span>./trecho.geojson
+tn<span class="w"> </span>projects<span class="w"> </span>update<span class="w"> </span>obra-br101<span class="w"> </span>--name<span class="w"> </span><span class="s2">&quot;Obra BR-101 (lote 2)&quot;</span><span class="w"> </span>--clear-deadline
+tn<span class="w"> </span>projects<span class="w"> </span>get<span class="w"> </span>obra-br101
+tn<span class="w"> </span>projects<span class="w"> </span>archive<span class="w"> </span>obra-br101
+</code></pre></div>
+<p>Um projeto criado pelo <code>tn</code> nasce em rascunho, e nenhum comando muda o
+status: para colocá-lo em andamento, conclua o assistente do web app (veja
+<a href="../../projetos/">Projetos</a>).
+<code>update</code> muda só os campos que você passa; <code>--clear-deadline</code> e
+<code>--clear-area</code> apagam o prazo e a área. <code>get</code> mostra os campos do projeto e,
+em tabelas separadas, suas camadas (a de cima primeiro, como na lista de
+camadas do mapa), seus formulários e sua equipe. Com <code>--json</code>, as camadas
+vêm na ordem da API, de baixo para cima.</p>
+<p><code>--area</code> lê um arquivo GeoJSON com um único Polygon ou MultiPolygon: a
+geometria sozinha, uma Feature ou uma FeatureCollection com exatamente uma
+Feature. Qualquer outra coisa (um ponto, duas feições, um arquivo que não é
+GeoJSON) é recusada antes de chegar à API. As coordenadas são em WGS 84, como
+manda o GeoJSON. Shapefile, KML e áreas com várias partes separadas só pelo
+web app, que converte e une os arquivos. As regras de tamanho e validade da
+área são as mesmas do web app.</p>
+<h3 id="pacotes-e-visao-geral">Pacotes e visão geral<a class="headerlink" href="#pacotes-e-visao-geral" title="Permanent link">&para;</a></h3>
+<div class="codehilite"><pre><span></span><code>tn<span class="w"> </span>projects<span class="w"> </span>bundles<span class="w"> </span>list<span class="w"> </span>obra-br101
+tn<span class="w"> </span>projects<span class="w"> </span>bundles<span class="w"> </span>retry<span class="w"> </span>obra-br101
+tn<span class="w"> </span>projects<span class="w"> </span>stats<span class="w"> </span>obra-br101
+tn<span class="w"> </span>projects<span class="w"> </span>daily<span class="w"> </span>obra-br101<span class="w"> </span>--days<span class="w"> </span><span class="m">14</span><span class="w"> </span>--collector<span class="w"> </span>ana@exemplo.com
+tn<span class="w"> </span>projects<span class="w"> </span>team<span class="w"> </span>obra-br101
+</code></pre></div>
+<p><code>bundles list</code> mostra as versões recentes do pacote offline, da mais nova
+para a mais antiga, e marca na coluna <code>field</code> a versão que o app recebe.
+<code>bundles retry</code> é o <strong>Verificar agora</strong> da aba Pacotes: verifica o pacote sem
+esperar os 2 minutos e diz quando a verificação acontece. Só funciona em
+projeto em andamento com área. O <code>tn</code> não baixa pacotes: um pacote é entregue a um
+dispositivo cadastrado, e o <code>tn</code> não é um. Como o pacote é gerado está em
+<a href="../../projetos/pacotes-offline/">Pacotes offline</a>.</p>
+<p><code>stats</code>, <code>daily</code> e <code>team</code> são os números da Visão Geral do projeto: o total
+de coletas, os dias com coleta, o melhor dia e a sequência atual; as coletas
+por dia (<code>--days N</code> para os últimos N dias, <code>--all</code> desde a primeira); e, para
+cada coletor, se tem o pacote, a última sincronização e as coletas de hoje e
+do total. <code>team</code> mostra a situação de campo; ele não muda a equipe do
+projeto. <code>--collector</code> aceita o e-mail ou o id da pessoa. Os dias são
+contados no fuso de <code>--tz</code> (por exemplo <code>America/Manaus</code>); sem ele, no de
+Brasília (<code>America/Sao_Paulo</code>). O que conta como coleta está em
+<a href="../../projetos/acompanhamento/">Acompanhar o projeto</a>.</p>
+<h3 id="atividade">Atividade<a class="headerlink" href="#atividade" title="Permanent link">&para;</a></h3>
+<div class="codehilite"><pre><span></span><code>tn<span class="w"> </span>projects<span class="w"> </span>events<span class="w"> </span>list<span class="w"> </span>obra-br101<span class="w"> </span>--kind<span class="w"> </span>response_rejected<span class="w"> </span>--from<span class="w"> </span><span class="m">2026</span>-10-01<span class="w"> </span>--to<span class="w"> </span><span class="m">2026</span>-10-23
+tn<span class="w"> </span>projects<span class="w"> </span>events<span class="w"> </span>list<span class="w"> </span>obra-br101<span class="w"> </span>--person<span class="w"> </span>ana@exemplo.com<span class="w"> </span>--person<span class="w"> </span>terranode<span class="w"> </span>--period<span class="w"> </span>7d
+tn<span class="w"> </span>projects<span class="w"> </span>events<span class="w"> </span>summary<span class="w"> </span>obra-br101<span class="w"> </span>--period<span class="w"> </span>30d
+tn<span class="w"> </span>projects<span class="w"> </span>events<span class="w"> </span><span class="nb">export</span><span class="w"> </span>obra-br101<span class="w"> </span>--period<span class="w"> </span>30d<span class="w"> </span>-o<span class="w"> </span>atividade.csv
+</code></pre></div>
+<p>São os eventos da aba <strong>Atividade</strong>, do mais recente para o mais antigo.
+<code>list</code>, <code>summary</code> e <code>export</code> aceitam os mesmos filtros:</p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+<th>Filtro</th>
+<th>O que faz</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--q &lt;texto&gt;</code></td>
+<td>Procura no título, na descrição, na pessoa, no aparelho e no tipo</td>
+</tr>
+<tr>
+<td><code>--person &lt;pessoa&gt;</code></td>
+<td>E-mail ou id da pessoa; <code>terranode</code> para os eventos do sistema. Pode repetir</td>
+</tr>
+<tr>
+<td><code>--kind &lt;tipo&gt;</code></td>
+<td>Tipo do evento, como <code>response_collected</code> ou <code>member_added</code>. Pode repetir</td>
+</tr>
+<tr>
+<td><code>--period 24h\|7d\|30d</code></td>
+<td>As últimas 24 horas, 7 dias ou 30 dias</td>
+</tr>
+<tr>
+<td><code>--from &lt;data&gt;</code>, <code>--to &lt;data&gt;</code></td>
+<td>Um intervalo de dias, inclusive, no fuso de <code>--tz</code></td>
+</tr>
+<tr>
+<td><code>--tz &lt;fuso&gt;</code></td>
+<td>Fuso dos dias; sem ele, <code>America/Sao_Paulo</code></td>
+</tr>
+</tbody>
+</table></div>
+<p>Os tipos são os da tabela em
+<a href="../../projetos/acompanhamento/#atividade">Acompanhar o projeto</a>; com
+<code>tn --json projects events list</code> cada evento traz o seu <code>kind</code>. Uma pessoa
+que saiu da organização continua nos eventos e pode ser filtrada pelo
+e-mail. Um e-mail que nenhum membro da organização tem é um erro, não uma
+lista vazia.</p>
+<p>Quem não é gestor ou editor da organização, nem gerencia o projeto, vê os
+eventos de gestão e só os próprios eventos de campo, como no web app.
+<code>list</code> lê todas as páginas a partir do mesmo instante, então eventos que
+chegam durante a leitura não se repetem nem deslocam a lista.</p>
+<p><code>summary</code> mostra o total do resultado, as contagens por tipo e por pessoa e o
+total dos últimos 30 dias sem filtro. <code>export</code> grava o CSV da aba
+<strong>Atividade</strong> (UTF-8 com BOM, mesmas colunas) no arquivo de <code>-o</code>; ele se
+recusa a sobrescrever um arquivo que já existe, a menos que você passe
+<code>--force</code>.</p>
+<h3 id="coletas-e-revisao">Coletas e revisão<a class="headerlink" href="#coletas-e-revisao" title="Permanent link">&para;</a></h3>
+<div class="codehilite"><pre><span></span><code>tn<span class="w"> </span>projects<span class="w"> </span>responses<span class="w"> </span>list<span class="w"> </span>obra-br101<span class="w"> </span>--state<span class="w"> </span>pending<span class="w"> </span>--survey<span class="w"> </span>rdo-dnit097
+tn<span class="w"> </span>projects<span class="w"> </span>responses<span class="w"> </span>summary<span class="w"> </span>obra-br101<span class="w"> </span>--collector<span class="w"> </span>ana@exemplo.com
+tn<span class="w"> </span>projects<span class="w"> </span>responses<span class="w"> </span>get<span class="w"> </span>obra-br101<span class="w"> </span>RDO-DNIT097-00139
+tn<span class="w"> </span>projects<span class="w"> </span>responses<span class="w"> </span>review<span class="w"> </span>obra-br101<span class="w"> </span>RDO-DNIT097-00139<span class="w"> </span>RDO-DNIT097-00140<span class="w"> </span>--approve
+tn<span class="w"> </span>projects<span class="w"> </span>responses<span class="w"> </span>review<span class="w"> </span>obra-br101<span class="w"> </span>RDO-DNIT097-00141<span class="w"> </span>--reject<span class="w"> </span>--comment<span class="w"> </span><span class="s2">&quot;Foto ilegível&quot;</span>
+</code></pre></div>
+<p><code>list</code> mostra as coletas da mais recente para a mais antiga pela primeira
+chegada, com número, estado, formulário, coletor e chegada. Os estados são
+<code>approved</code> (aprovada), <code>pending</code> (aguardando revisão) e <code>rejected</code>
+(rejeitada). <code>--state</code>, <code>--collector</code> e <code>--survey</code> podem se repetir;
+<code>--collector</code> aceita o e-mail ou o id da pessoa, e <code>--q</code> procura no número e
+no nome do coletor. <code>summary</code> conta as coletas por estado, com os mesmos
+filtros. <code>get</code> mostra uma coleta com as respostas, as mídias e o histórico de
+chegadas e revisões; o link de cada mídia expira e só sai com <code>--json</code>.</p>
+<p><code>review</code> decide uma ou mais coletas de uma vez: <code>--approve</code> aprova,
+<code>--reject</code> rejeita (pede <code>--comment</code>, que o coletor vê) e <code>--reopen</code> devolve a
+coleta para revisão. Só funciona em projeto que exige revisão, para quem é
+gestor ou revisor do projeto, e ninguém revisa a própria coleta. O <code>tn</code> lê
+cada coleta antes de decidir e decide sobre o estado que leu. O comando
+imprime uma linha por coleta, com um destes resultados:</p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+<th>Resultado</th>
+<th>O que significa</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>decided</code></td>
+<td>A decisão foi registrada</td>
+</tr>
+<tr>
+<td><code>conflict</code></td>
+<td>A coleta mudou depois da leitura (outra pessoa decidiu, ou chegou uma nova versão do campo) e ficou como estava. Rode o comando de novo para decidir sobre o estado atual</td>
+</tr>
+<tr>
+<td><code>own_collection</code></td>
+<td>A coleta é sua, e você não pode revisá-la</td>
+</tr>
+<tr>
+<td><code>not_found</code></td>
+<td>Nenhuma coleta do projeto tem esse número ou id</td>
+</tr>
+</tbody>
+</table></div>
+<p>As outras coletas são decididas mesmo quando uma falha, mas o comando termina
+com código 1 se alguma não foi decidida.</p>
 <h2 id="relacionado">Relacionado<a class="headerlink" href="#relacionado" title="Permanent link">&para;</a></h2>
 <ul>
 <li><a href="../api/">API e SDK</a>: a API por trás do <code>tn</code> e o SDK Python.</li>
@@ -1554,6 +1746,22 @@ envio concluído. <code>datasources delete</code> remove a fonte e seus dados.</
         
         <a href="#envios-e-fontes-de-dados" data-active="false" data-depth="3">
             Envios e fontes de dados
+        </a>
+        
+        <a href="#projetos" data-active="false" data-depth="3">
+            Projetos
+        </a>
+        
+        <a href="#pacotes-e-visao-geral" data-active="false" data-depth="3">
+            Pacotes e visão geral
+        </a>
+        
+        <a href="#atividade" data-active="false" data-depth="3">
+            Atividade
+        </a>
+        
+        <a href="#coletas-e-revisao" data-active="false" data-depth="3">
+            Coletas e revisão
         </a>
         
         
