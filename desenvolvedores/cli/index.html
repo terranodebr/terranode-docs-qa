@@ -972,7 +972,7 @@ está autenticado. A matriz completa está em
 <td>não</td>
 </tr>
 <tr>
-<td><code>projects list</code>, <code>get</code>, <code>bundles list</code>, <code>stats</code>, <code>daily</code>, <code>team</code>, <code>events</code>, <code>responses list</code>, <code>summary</code>, <code>get</code></td>
+<td><code>projects list</code>, <code>get</code>, <code>members list</code>, <code>layers list</code>, <code>surveys list</code>, <code>bundles list</code>, <code>stats</code>, <code>daily</code>, <code>team</code>, <code>events</code>, <code>responses list</code>, <code>summary</code>, <code>get</code></td>
 <td>sim</td>
 <td>sim</td>
 <td>sim</td>
@@ -984,7 +984,7 @@ está autenticado. A matriz completa está em
 <td>não</td>
 </tr>
 <tr>
-<td><code>projects update</code>, <code>bundles retry</code></td>
+<td><code>projects update</code>, <code>bundles retry</code>, <code>members add</code>, <code>set-role</code> e <code>remove</code>, <code>layers add</code> e <code>remove</code>, <code>surveys add</code> e <code>remove</code></td>
 <td>criador ou gestor do projeto</td>
 <td>criador ou gestor do projeto</td>
 <td>criador ou gestor do projeto</td>
@@ -1140,6 +1140,15 @@ tn projects     list [--q &lt;texto&gt;] [--survey &lt;formulario&gt;] | get &lt
                 | archive &lt;projeto&gt;
                 | stats &lt;projeto&gt; [--tz] | team &lt;projeto&gt; [--tz]
                 | daily &lt;projeto&gt; (--days N | --all) [--collector &lt;pessoa&gt;] [--tz]
+tn projects members   list &lt;projeto&gt; | add &lt;projeto&gt; &lt;pessoa&gt; --role &lt;papel-no-projeto&gt;
+                      | set-role &lt;projeto&gt; &lt;pessoa&gt; &lt;papel-no-projeto&gt; | remove &lt;projeto&gt; &lt;pessoa&gt;
+tn projects layers    list &lt;projeto&gt;
+                      | add &lt;projeto&gt; --catalog &lt;catalogo&gt; --datasource &lt;fonte&gt;
+                        [--name &lt;nome&gt;] [--style &lt;estilo&gt;] [--order N]
+                      | remove &lt;projeto&gt; --catalog &lt;catalogo&gt; --datasource &lt;fonte&gt; [--name &lt;nome&gt;]
+tn projects surveys   list &lt;projeto&gt;
+                      | add &lt;projeto&gt; &lt;formulario&gt; [--area &lt;arquivo&gt;] [--participant &lt;pessoa&gt;]...
+                      | remove &lt;projeto&gt; &lt;formulario&gt;
 tn projects bundles   list &lt;projeto&gt; | retry &lt;projeto&gt;
 tn projects events    list &lt;projeto&gt; [filtros] | summary &lt;projeto&gt; [filtros]
                       | export &lt;projeto&gt; -o &lt;arquivo.csv&gt; [--force] [filtros]
@@ -1148,8 +1157,12 @@ tn projects responses list &lt;projeto&gt; [--state] [--q] [--collector] [--surv
                       | get &lt;projeto&gt; &lt;coleta&gt;
                       | review &lt;projeto&gt; COLETA... (--approve | --reject | --reopen) [--comment]
 </code></pre></div>
-<p><code>&lt;papel&gt;</code> é sempre <code>owner</code>, <code>editor</code> ou <code>field</code>. Não existem comandos para
-formulários ou integrações.</p>
+<p><code>&lt;papel&gt;</code> é sempre <code>owner</code>, <code>editor</code> ou <code>field</code>, o papel na organização.
+<code>&lt;papel-no-projeto&gt;</code> é <code>manager</code> (gestor), <code>collector</code> (coletor) ou
+<code>reviewer</code> (revisor). <code>&lt;pessoa&gt;</code> é o e-mail ou o id de um membro.</p>
+<p>Não existem comandos para criar ou editar formulários, nem para integrações:
+<code>tn projects surveys</code> só coloca e tira de um projeto formulários que já
+existem.</p>
 <h3 id="membros-e-convites">Membros e convites<a class="headerlink" href="#membros-e-convites" title="Permanent link">&para;</a></h3>
 <div class="codehilite"><pre><span></span><code>tn<span class="w"> </span>orgs<span class="w"> </span>members<span class="w"> </span>set-role<span class="w"> </span>ana@exemplo.com<span class="w"> </span>editor
 tn<span class="w"> </span>orgs<span class="w"> </span>members<span class="w"> </span>remove<span class="w"> </span>ana@exemplo.com
@@ -1225,6 +1238,63 @@ GeoJSON) é recusada antes de chegar à API. As coordenadas são em WGS 84, como
 manda o GeoJSON. Shapefile, KML e áreas com várias partes separadas só pelo
 web app, que converte e une os arquivos. As regras de tamanho e validade da
 área são as mesmas do web app.</p>
+<h3 id="equipe-do-projeto">Equipe do projeto<a class="headerlink" href="#equipe-do-projeto" title="Permanent link">&para;</a></h3>
+<div class="codehilite"><pre><span></span><code>tn<span class="w"> </span>projects<span class="w"> </span>members<span class="w"> </span>list<span class="w"> </span>obra-br101
+tn<span class="w"> </span>projects<span class="w"> </span>members<span class="w"> </span>add<span class="w"> </span>obra-br101<span class="w"> </span>ana@exemplo.com<span class="w"> </span>--role<span class="w"> </span>collector
+tn<span class="w"> </span>projects<span class="w"> </span>members<span class="w"> </span>set-role<span class="w"> </span>obra-br101<span class="w"> </span>ana@exemplo.com<span class="w"> </span>reviewer
+tn<span class="w"> </span>projects<span class="w"> </span>members<span class="w"> </span>remove<span class="w"> </span>obra-br101<span class="w"> </span>joao@exemplo.com
+</code></pre></div>
+<p>Cada comando muda uma pessoa e deixa o resto da equipe como está. A pessoa é
+indicada pelo e-mail (maiúsculas e minúsculas não importam) ou pelo id, e
+precisa ser um membro ativo da organização. Adicionar quem já está na equipe é
+recusado; para mudar o papel, use <code>set-role</code>. O criador do projeto continua
+gestor: mudar o papel dele ou removê-lo é recusado. Quem deixa de ser coletor,
+por troca de papel ou remoção, sai também dos formulários em que coletava.</p>
+<p><code>members</code> muda a equipe; <code>team</code> (abaixo) mostra a situação de campo dela. Os
+papéis estão em <a href="../../organizacao/papeis-e-permissoes/">Papéis e permissões</a>.</p>
+<h3 id="camadas-do-projeto">Camadas do projeto<a class="headerlink" href="#camadas-do-projeto" title="Permanent link">&para;</a></h3>
+<div class="codehilite"><pre><span></span><code>tn<span class="w"> </span>projects<span class="w"> </span>layers<span class="w"> </span>list<span class="w"> </span>obra-br101
+tn<span class="w"> </span>projects<span class="w"> </span>layers<span class="w"> </span>add<span class="w"> </span>obra-br101<span class="w"> </span>--catalog<span class="w"> </span>dnit<span class="w"> </span>--datasource<span class="w"> </span>rodovias
+tn<span class="w"> </span>projects<span class="w"> </span>layers<span class="w"> </span>add<span class="w"> </span>obra-br101<span class="w"> </span>--catalog<span class="w"> </span>dnit<span class="w"> </span>--datasource<span class="w"> </span>pontes<span class="w"> </span>--name<span class="w"> </span><span class="s2">&quot;Pontes&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--style<span class="w"> </span>pontes-por-tipo<span class="w"> </span>--order<span class="w"> </span><span class="m">5</span>
+tn<span class="w"> </span>projects<span class="w"> </span>layers<span class="w"> </span>remove<span class="w"> </span>obra-br101<span class="w"> </span>--catalog<span class="w"> </span>dnit<span class="w"> </span>--datasource<span class="w"> </span>rodovias
+tn<span class="w"> </span>projects<span class="w"> </span>layers<span class="w"> </span>remove<span class="w"> </span>obra-br101<span class="w"> </span>--catalog<span class="w"> </span>dnit<span class="w"> </span>--datasource<span class="w"> </span>lotes<span class="w"> </span>--name<span class="w"> </span><span class="s2">&quot;Lotes livres&quot;</span>
+</code></pre></div>
+<p><code>layers list</code> mostra as camadas na ordem do mapa: a de cima primeiro. Com
+<code>--json</code>, elas vêm na ordem da API, de baixo para cima.</p>
+<p><code>layers add</code> desenha uma fonte de dados no mapa do projeto. Sem <code>--name</code>, a
+camada leva o nome da fonte; sem <code>--style</code>, usa o estilo padrão dela. A ordem
+de desenho é um número, e a camada de número maior fica por cima. <strong>Sem
+<code>--order</code>, a camada vai para o topo</strong>, acima de todas as outras. Com
+<code>--order N</code>, ela fica exatamente nesse número, mesmo repetindo o de outra
+camada, e nenhuma outra camada muda de lugar. Os números não precisam ser
+seguidos. O nome de cada camada é único no projeto, e um estilo feito para
+outro tipo de geometria é recusado.</p>
+<p><code>layers remove</code> identifica a camada pela fonte de dados que ela desenha
+(<code>--catalog</code> e <code>--datasource</code>). Se o projeto tem duas camadas da mesma fonte,
+por exemplo "Lotes vendidos" e "Lotes livres", o comando não remove nenhuma,
+lista as duas e pede <code>--name</code> para escolher.</p>
+<p>Uma camada não é editada no lugar. Para trocar o nome, o estilo ou a ordem,
+remova e adicione de novo. A camada volta como nova (com outro id) e, sem
+<code>--order</code>, vai para o topo.</p>
+<h3 id="formularios-do-projeto">Formulários do projeto<a class="headerlink" href="#formularios-do-projeto" title="Permanent link">&para;</a></h3>
+<div class="codehilite"><pre><span></span><code>tn<span class="w"> </span>projects<span class="w"> </span>surveys<span class="w"> </span>list<span class="w"> </span>obra-br101
+tn<span class="w"> </span>projects<span class="w"> </span>surveys<span class="w"> </span>add<span class="w"> </span>obra-br101<span class="w"> </span>rdo-dnit097
+tn<span class="w"> </span>projects<span class="w"> </span>surveys<span class="w"> </span>add<span class="w"> </span>obra-br101<span class="w"> </span>vistoria-ponte<span class="w"> </span>--area<span class="w"> </span>./trecho-sul.geojson<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--participant<span class="w"> </span>ana@exemplo.com<span class="w"> </span>--participant<span class="w"> </span>joao@exemplo.com
+tn<span class="w"> </span>projects<span class="w"> </span>surveys<span class="w"> </span>remove<span class="w"> </span>obra-br101<span class="w"> </span>vistoria-ponte
+</code></pre></div>
+<p><code>surveys add</code> coloca um formulário da organização no projeto. <code>--area</code>
+restringe onde ele é coletado e segue as mesmas regras do <code>--area</code> de
+<code>projects create</code>. <code>--participant</code>, repetido para cada pessoa, indica quem
+coleta nele: o e-mail ou o id de um <strong>coletor do projeto</strong> (adicione a pessoa
+antes com <code>members add --role collector</code>). Um formulário entra uma vez só em
+cada projeto.</p>
+<p><code>surveys remove</code> tira o formulário do projeto junto com os participantes. As
+coletas já feitas nele continuam no projeto.</p>
+<p>Um formulário do projeto não é editado no lugar. Para trocar a área ou os
+participantes, remova e adicione de novo, passando outra vez os
+participantes: eles não voltam sozinhos.</p>
 <h3 id="pacotes-e-visao-geral">Pacotes e visão geral<a class="headerlink" href="#pacotes-e-visao-geral" title="Permanent link">&para;</a></h3>
 <div class="codehilite"><pre><span></span><code>tn<span class="w"> </span>projects<span class="w"> </span>bundles<span class="w"> </span>list<span class="w"> </span>obra-br101
 tn<span class="w"> </span>projects<span class="w"> </span>bundles<span class="w"> </span>retry<span class="w"> </span>obra-br101
@@ -1750,6 +1820,18 @@ com código 1 se alguma não foi decidida.</p>
         
         <a href="#projetos" data-active="false" data-depth="3">
             Projetos
+        </a>
+        
+        <a href="#equipe-do-projeto" data-active="false" data-depth="3">
+            Equipe do projeto
+        </a>
+        
+        <a href="#camadas-do-projeto" data-active="false" data-depth="3">
+            Camadas do projeto
+        </a>
+        
+        <a href="#formularios-do-projeto" data-active="false" data-depth="3">
+            Formulários do projeto
         </a>
         
         <a href="#pacotes-e-visao-geral" data-active="false" data-depth="3">
