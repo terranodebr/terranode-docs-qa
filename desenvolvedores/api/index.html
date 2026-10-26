@@ -940,8 +940,17 @@ página cobre só as convenções que valem para todas elas.</p>
 <p>As rotas estão agrupadas por recurso: <code>/auth</code> (login, identidade, chaves de
 API, dispositivos), <code>/organizations</code> (membros e convites), <code>/catalogs</code>
 (catálogos, estilos, fontes de dados, envios), <code>/surveys</code> (formulários e
-modelos), <code>/projects</code> (projetos, camadas, pacotes, eventos), <code>/integrations</code>,
-<code>/search</code> e <code>/settings</code>.</p>
+modelos), <code>/projects</code> (projetos, equipe, camadas, formulários, pacotes,
+eventos, coletas), <code>/integrations</code>, <code>/search</code> e <code>/settings</code>.</p>
+<p>Equipe, camadas e formulários de um projeto podem ser salvos de uma vez,
+com <code>PATCH /projects/{projeto}</code> e a lista completa, ou alterados um a um:
+<code>POST</code>/<code>PATCH</code>/<code>DELETE /projects/{projeto}/members</code>, <code>POST</code>/<code>DELETE
+/projects/{projeto}/layers</code> e <code>POST</code>/<code>DELETE /projects/{projeto}/surveys</code>.
+As rotas de um item só mexem nele e deixam o resto do projeto como está.</p>
+<p>Nos filtros de pessoa do projeto (<code>people</code> nos eventos, <code>collector</code> nas
+coletas e nas séries da visão geral), a pessoa pode ser indicada pelo id do
+usuário ou pelo e-mail, inclusive alguém que já saiu da organização. Um
+e-mail que nenhum membro tem recebe <code>404</code>.</p>
 <h2 id="autenticacao">Autenticação<a class="headerlink" href="#autenticacao" title="Permanent link">&para;</a></h2>
 <p>Toda chamada leva um token no header <code>Authorization</code>:</p>
 <div class="codehilite"><pre><span></span><code>Authorization: Bearer &lt;token&gt;
@@ -993,6 +1002,10 @@ resolvido dentro da organização ou do recurso pai. Envios, chaves de API,
 membros, convites, dispositivos, camadas de projeto e pacotes não têm slug e
 são sempre identificados pelo id. Slugs podem mudar quando alguém renomeia o
 recurso; em integrações duradouras, guarde ids.</p>
+<p>Duas exceções nas rotas de projeto: um membro da equipe é indicado pelo id
+do usuário ou pelo e-mail, e uma camada é removida pelo catálogo e pela fonte
+de dados que ela desenha (com o nome só para escolher entre duas camadas da
+mesma fonte).</p>
 <h2 id="paginacao">Paginação<a class="headerlink" href="#paginacao" title="Permanent link">&para;</a></h2>
 <p>Toda listagem (<code>GET</code> de uma coleção) devolve o mesmo envelope:</p>
 <div class="codehilite"><pre><span></span><code><span class="p">{</span><span class="nt">&quot;count&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">342</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;limit&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;offset&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;results&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="err">...</span><span class="w"> </span><span class="p">]}</span>
