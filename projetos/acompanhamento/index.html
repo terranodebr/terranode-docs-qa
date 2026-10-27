@@ -962,9 +962,9 @@ os dados saem do app e chegam ao servidor está em
 <p>Os papéis estão em <a href="../../organizacao/papeis-e-permissoes/">Papéis e permissões</a>
 e <a href="../equipe/">Equipe do projeto</a>.</p>
 <h2 id="visao-geral">Visão Geral<a class="headerlink" href="#visao-geral" title="Permanent link">&para;</a></h2>
-<p>A aba <strong>Visão Geral</strong> tem duas vistas, <strong>Painel</strong> e <strong>Mapa</strong>; o navegador
-lembra a última que você usou. Os cartões se atualizam sozinhos quando chega
-algo do campo. Todos os números são calculados na hora a partir das coletas
+<p>A aba <strong>Visão Geral</strong> mostra o mapa do projeto com um painel de cartões ao
+lado. Os cartões se atualizam sozinhos quando chega algo do campo ou uma
+decisão de revisão. Todos os números são calculados na hora a partir das coletas
 recebidas; nada fica guardado em cache. O botão <strong>Exportar dados</strong> do
 cabeçalho ainda não faz nada.</p>
 <h3 id="o-que-conta-como-coleta">O que conta como coleta<a class="headerlink" href="#o-que-conta-como-coleta" title="Permanent link">&para;</a></h3>
@@ -983,26 +983,48 @@ cartões param no último dia com coleta.</p>
 </thead>
 <tbody>
 <tr>
+<td>Na ordem do painel:</td>
+<td></td>
+</tr>
+</tbody>
+</table></div>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+<th>Cartão</th>
+<th>O que mostra</th>
+</tr>
+</thead>
+<tbody>
+<tr>
 <td><strong>Coletas recebidas</strong></td>
-<td>O acumulado dos últimos 14 dias. Com as setas do teclado você lê dia a dia ("qui, 24/09 · 30 coletas").</td>
+<td>O total do período escolhido na placa do mapa (Tudo, 14 dias ou Hoje), com as coletas de hoje e a variação da semana.</td>
+</tr>
+<tr>
+<td><strong>Revisão</strong></td>
+<td>Aparece só quando o projeto exige revisão. Divide as coletas em <strong>Validadas</strong>, <strong>Em revisão</strong> e <strong>Rejeitadas</strong>, no mesmo período e coletor de Coletas recebidas. Quem revisa vê <strong>Revisar</strong> enquanto houver coletas em revisão; o link abre a aba <strong>Coletas</strong> filtrada nelas. Coletas recebidas antes de o projeto exigir revisão não entram na divisão.</td>
+</tr>
+<tr>
+<td><strong>Equipe agora</strong></td>
+<td>Uma linha por coletor com a situação dele agora e quantas coletas fez hoje e no total. Clicar numa linha filtra o mapa, Coletas recebidas e Revisão por essa pessoa. Em um projeto concluído o cartão vira <strong>Equipe</strong>, com totais e a última coleta de cada pessoa.</td>
 </tr>
 <tr>
 <td><strong>Dias com coleta</strong></td>
 <td>Um calendário de 8 semanas, com <strong>Sequência atual</strong> (dias seguidos com coleta; o dia de hoje sem coleta ainda não quebra a sequência), <strong>Melhor dia</strong> (em empate, o mais recente) e <strong>Média</strong> por dia com coleta.</td>
 </tr>
 <tr>
-<td><strong>Equipe agora</strong></td>
-<td>Uma linha por coletor com a situação dele agora e quantas coletas fez hoje e no total. Em um projeto concluído o cartão vira <strong>Equipe</strong>, com totais e a última coleta de cada pessoa.</td>
+<td><strong>Por formulário</strong></td>
+<td>O total de coletas de cada formulário do projeto, as de hoje e a parte de cada um no total. Quem edita formulários abre o formulário pela linha.</td>
 </tr>
 <tr>
-<td><strong>Revisão</strong></td>
-<td>Aparece só quando o projeto exige revisão; hoje não há fluxo de revisão, então fica vazio.</td>
+<td><strong>Atividade</strong></td>
+<td>Os 4 eventos mais recentes do projeto, com filtros <strong>Coletas</strong>, <strong>Revisões</strong> e <strong>Equipe</strong>. <strong>Ver toda a atividade</strong> abre a aba <strong>Atividade</strong>.</td>
 </tr>
 </tbody>
 </table></div>
-<p>Os cartões <strong>Por formulário</strong>, <strong>Atividade</strong> e <strong>Precisa de atenção</strong> ainda
-não trazem dados.</p>
-<!-- screenshot: a vista Painel da Visão Geral com os cartões Coletas recebidas, Dias com coleta e Equipe agora preenchidos -->
+<p>Dias com coleta, Por formulário e Atividade contam o projeto inteiro,
+qualquer que seja o período ou o coletor escolhido na placa.</p>
+<!-- screenshot: a Visão Geral com o mapa e o painel com os seis cartões preenchidos -->
 
 <h3 id="a-situacao-de-cada-pessoa">A situação de cada pessoa<a class="headerlink" href="#a-situacao-de-cada-pessoa" title="Permanent link">&para;</a></h3>
 <p>O cartão <strong>Equipe agora</strong> lista os coletores do projeto e qualquer outra
@@ -1038,8 +1060,8 @@ sinais que o app envia durante a sessão:</p>
 periódico ou coleta recebida. O selo do cartão resume "N com lote aberto". Os
 estados da sessão e o que acontece quando o app a encerra estão em
 <a href="../../dados-de-campo/">Coletas, mídias e sincronização</a>.</p>
-<h3 id="a-vista-mapa">A vista Mapa<a class="headerlink" href="#a-vista-mapa" title="Permanent link">&para;</a></h3>
-<p>A vista <strong>Mapa</strong> desenha as camadas do projeto e as camadas de campo. A
+<h3 id="o-mapa">O mapa<a class="headerlink" href="#o-mapa" title="Permanent link">&para;</a></h3>
+<p>O mapa desenha as camadas do projeto e as camadas de campo. A
 placa <strong>Período</strong> filtra as coletas em <strong>Tudo</strong>, <strong>14 dias</strong> e <strong>Hoje</strong> (em
 um projeto concluído não há <strong>Hoje</strong>). Pelo cartão de equipe você fixa uma
 pessoa como filtro. <strong>Focar na área de interesse</strong> enquadra as coletas
@@ -1054,7 +1076,7 @@ filtradas.</p>
   tem, com quantas ainda aguardam envio. Linhas ligam a coleta às mídias com
   geolocalização; a linha fica tracejada enquanto a mídia não sobe.</li>
 </ul>
-<!-- screenshot: a vista Mapa com dois coletores Em campo, trajetos coloridos e o painel de uma coleta aberto -->
+<!-- screenshot: o mapa da Visão Geral com dois coletores Em campo, trajetos coloridos e o painel de uma coleta aberto -->
 
 <h2 id="camadas-de-campo">Camadas de campo<a class="headerlink" href="#camadas-de-campo" title="Permanent link">&para;</a></h2>
 <p>Os mapas do projeto (vista <strong>Mapa</strong> da visão geral e aba <strong>Dados
@@ -1506,8 +1528,8 @@ pela aba <strong>Atividade</strong> descritos aqui.</p>
             A situação de cada pessoa
         </a>
         
-        <a href="#a-vista-mapa" data-active="false" data-depth="3">
-            A vista Mapa
+        <a href="#o-mapa" data-active="false" data-depth="3">
+            O mapa
         </a>
         
         
