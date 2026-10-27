@@ -957,6 +957,10 @@ pacotes.</p>
 <td>Uma por camada do projeto, recortada pela área em todos os níveis de zoom</td>
 </tr>
 <tr>
+<td><strong>Camada raster</strong></td>
+<td>Uma por camada raster do projeto, recortada pela área, em tiles já coloridos</td>
+</tr>
+<tr>
 <td><strong>Consultas de localização</strong></td>
 <td>As tabelas que os campos de consulta de localização dos formulários leem, só com as feições dentro da área</td>
 </tr>
@@ -966,9 +970,9 @@ pacotes.</p>
 </tr>
 </tbody>
 </table></div>
-<p>Camadas raster entram como tiles já coloridos, até o zoom da imagem (no
-máximo 19). Uma camada cujo estilo ainda não foi publicado fica fora até ser
-publicada. As camadas herdam o estilo da fonte de dados, veja
+<p>O mapa base e as camadas, vetoriais e raster, são arquivos PMTiles: são a
+maior parte do pacote. Camadas raster vão até o zoom da imagem (no máximo 19).
+Uma camada cujo estilo ainda não foi publicado fica fora até ser publicada. As camadas herdam o estilo da fonte de dados, veja
 <a href="../camadas-e-formularios/">Camadas e formulários do projeto</a>.</p>
 <p>Os formulários não vão no pacote. Cada pessoa recebe os seus no momento do
 download, de acordo com o papel e os registros dela no projeto. Assim duas
@@ -1001,12 +1005,28 @@ de área, camadas e formulários antes de publicar, em vez de salvar aos
 poucos ao longo do dia.</p>
 </div>
 <h2 id="a-aba-pacotes">A aba Pacotes<a class="headerlink" href="#a-aba-pacotes" title="Permanent link">&para;</a></h2>
-<p>A aba mostra, no topo, a versão <strong>Disponível para o campo</strong> (número, tamanho
-e quando foi gerada) ou "Nenhuma versão disponível para o campo ainda". Abaixo
-vem o histórico das últimas 5 versões, com <strong>Versão</strong>, <strong>Estado</strong>, <strong>Criada
-em</strong> e <strong>Tamanho</strong>, e para cada versão a lista de arquivos com <strong>Arquivo</strong>,
-<strong>Tipo</strong>, <strong>Estado</strong> e <strong>Tamanho</strong>, resumida em "N de M arquivos prontos".
-A tela atualiza sozinha enquanto a versão é gerada.</p>
+<p>Enquanto uma versão nova é gerada, uma faixa no topo da aba mostra "Gerando
+nova versão N", quantos arquivos já estão prontos e com qual versão o app
+continua até lá. Se a versão falhar ou travar, a mesma faixa diz o que
+aconteceu e, para quem pode editar, oferece <strong>Tentar novamente</strong>.</p>
+<p>O cartão <strong>Disponível para o campo</strong> mostra a versão que o app baixa, ou
+"Nenhuma versão disponível para o campo ainda", e:</p>
+<ul>
+<li><strong>Tamanho</strong>, <strong>Gerada em</strong> e <strong>Arquivos</strong> (quantos estão prontos);</li>
+<li><strong>Pacote baixado</strong>: quantas pessoas da equipe têm o pacote do projeto em um
+  aparelho ativo, com o atalho <strong>Ver equipe</strong>. A contagem é por pessoa e vale
+  para qualquer versão do pacote, como o cartão <strong>Equipe agora</strong> da visão
+  geral;</li>
+<li><strong>Composição</strong>: quanto do pacote são PMTiles, dividido em mapa base, camadas
+  vetoriais e camadas raster, e quanto são os outros arquivos (consultas de
+  localização, estilo, ícones e fontes).</li>
+</ul>
+<p>O <strong>Histórico</strong> lista as últimas 5 versões, com <strong>Versão</strong>, <strong>Estado</strong>,
+<strong>Criada em</strong> e <strong>Tamanho</strong>; uma versão que não terminou não tem tamanho
+("—"). Cada versão abre a lista dos seus arquivos, com <strong>Arquivo</strong>, <strong>Tipo</strong>,
+<strong>Estado</strong> e <strong>Tamanho</strong>, e a versão em geração já aparece aberta. Em telas
+largas, o histórico fica à esquerda e o cartão <strong>Disponível para o campo</strong> à
+direita. A tela atualiza sozinha enquanto a versão é gerada.</p>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
