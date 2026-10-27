@@ -931,7 +931,8 @@ ou uma chave de API) consegue ler os dados pela OGC API. Como obter e guardar
 tokens está em <a href="../../organizacao/chaves-e-dispositivos/">Chaves de API e dispositivos</a>
 e em <a href="../../desenvolvedores/api/">API e SDK</a>.</p>
 <h2 id="ogc-api-features">OGC API Features<a class="headerlink" href="#ogc-api-features" title="Permanent link">&para;</a></h2>
-<p>Cada catálogo da sua organização tem o próprio servidor OGC, somente leitura:</p>
+<p>Cada catálogo da sua organização, e cada catálogo público da terranode, tem o
+próprio servidor OGC, somente leitura:</p>
 <div class="codehilite"><pre><span></span><code>https://&lt;api&gt;/api/v1/ogc/&lt;organização&gt;/catalogs/&lt;catálogo&gt;
 </code></pre></div>
 <p>Troque <code>&lt;api&gt;</code> pelo endereço da API da sua instalação (o mesmo que você
@@ -971,9 +972,11 @@ configura no <code>tn</code>), <code>&lt;organização&gt;</code> pelo slug ou i
 em <code>https://&lt;api&gt;/api/v1/ogc/openapi.json</code>; os dois também pedem token.</p>
 <p>Regras:</p>
 <ul>
-<li>Só catálogos da <strong>sua organização</strong> são servidos. Catálogos públicos da
-  terranode, inclusive os de <a href="../dados-publicos/">dados públicos</a>, não
-  aparecem na OGC API de outra organização.</li>
+<li>São servidos os catálogos da <strong>sua organização</strong> e os catálogos públicos da
+  terranode, inclusive os de <a href="../dados-publicos/">dados públicos</a>. Use sempre
+  o slug da sua organização no endereço, mesmo para um catálogo público.</li>
+<li>Se um catálogo seu tiver o mesmo slug de um catálogo público, o slug é
+  recusado como ambíguo; use o id do catálogo.</li>
 <li>Só fontes vetoriais com geometria viram coleções. Rasters e fontes
   <strong>Sem geometria</strong> ficam de fora.</li>
 <li>O id de cada coleção é o slug da fonte de dados; o id de cada feição é o
