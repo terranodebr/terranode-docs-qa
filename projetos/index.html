@@ -1121,7 +1121,9 @@ só aquela parte:</p>
 alterado pergunta antes de descartar. O assistente só volta a abrir para
 terminar um rascunho: em um projeto em <strong>Rascunho</strong>, o menu <strong>Ações do
 projeto</strong> oferece <strong>Continuar edição</strong>. Toda alteração fica registrada na aba
-<strong>Atividade</strong>, veja <a href="acompanhamento/">Acompanhar o projeto</a>.</p>
+<strong>Atividade</strong>, veja <a href="acompanhamento/">Acompanhar o projeto</a>. Em um projeto
+concluído, só <strong>Editar detalhes</strong> continua disponível; veja
+<a href="#concluir-e-reabrir">Concluir e reabrir</a>.</p>
 <div class="admonition warning">
 <p class="admonition-title">Mudanças em um projeto em andamento</p>
 <p>Alterar a área, as camadas, os formulários ou o estado de um projeto em
@@ -1151,16 +1153,57 @@ aviso de atualização no app. Veja
 </tr>
 <tr>
 <td><strong>Concluído</strong></td>
-<td>Só pela API</td>
-<td>As métricas da visão geral param no último dia com coleta e o cartão de equipe passa a mostrar totais.</td>
+<td><strong>Concluir projeto</strong>, no menu <strong>Ações do projeto</strong></td>
+<td>As métricas da visão geral param no último dia com coleta e o cartão de equipe passa a mostrar totais. Camadas, formulários, equipe e área ficam bloqueados.</td>
 </tr>
 </tbody>
 </table></div>
-<p>Não há botão para encerrar ou arquivar no web app. As duas ações existem
-apenas na <a href="../desenvolvedores/api/">API</a>: encerrar é mudar o estado para
-concluído; arquivar esconde o projeto das listas e da página de detalhe. Um
-aparelho que já baixou o pacote continua conseguindo enviar as coletas desse
-projeto, qualquer que seja o estado atual dele.</p>
+<p>Arquivar não tem botão no web app: existe só na
+<a href="../desenvolvedores/api/">API</a> e esconde o projeto das listas e da página de
+detalhe. Um aparelho que já baixou o pacote continua conseguindo enviar as
+coletas desse projeto, qualquer que seja o estado atual dele.</p>
+<h2 id="concluir-e-reabrir">Concluir e reabrir<a class="headerlink" href="#concluir-e-reabrir" title="Permanent link">&para;</a></h2>
+<p>Quem pode editar o projeto (o criador ou um gestor do projeto) o conclui pelo
+menu <strong>Ações do projeto</strong>, na aba <strong>Visão Geral</strong>, com <strong>Concluir projeto</strong>.
+A janela mostra quantas coletas o projeto recebeu e avisa o que ainda está
+pendente: respostas aguardando revisão e coletores com dados ainda no
+aparelho. O aviso não impede a conclusão. Você pode escrever uma nota, que vai
+no e-mail e fica na aba <strong>Atividade</strong>.</p>
+<p>Depois de concluído:</p>
+<ul>
+<li>A coleta em campo se encerra, mas o que ainda estava nos aparelhos continua
+  chegando. Se um lote chega depois da conclusão, os gestores do projeto
+  recebem um e-mail dizendo quantas coletas chegaram e de quem.</li>
+<li>Camadas, formulários, equipe e área ficam bloqueados até o projeto ser
+  reaberto. <strong>Editar detalhes</strong> continua disponível, assim como a revisão das
+  respostas e a exportação.</li>
+<li>O pacote offline não ganha novas versões. Quem já baixou o pacote continua
+  com ele; um aparelho que nunca o baixou não consegue mais baixá-lo.</li>
+<li>Um aviso no topo da página diz quando e por quem o projeto foi concluído.</li>
+</ul>
+<p>Para voltar a trabalhar no projeto, use <strong>Reabrir projeto</strong>, no aviso ou no
+menu <strong>Ações do projeto</strong>. Se o prazo estimado já passou, a janela sugere um
+novo. O projeto volta a <strong>Em andamento</strong> e o pacote é conferido de novo; uma
+nova versão só é gerada se algo mudou.</p>
+<p>Quem recebe e-mail:</p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+<th>Quando</th>
+<th>Quem</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>O projeto é concluído ou reaberto</td>
+<td>Todos os membros do projeto, menos quem concluiu ou reabriu. Os coletores recebem também o que fazer no aparelho.</td>
+</tr>
+<tr>
+<td>Chegam coletas depois da conclusão</td>
+<td>Os gestores do projeto, uma vez por lote.</td>
+</tr>
+</tbody>
+</table></div>
 <h2 id="relacionado">Relacionado<a class="headerlink" href="#relacionado" title="Permanent link">&para;</a></h2>
 <ul>
 <li><a href="camadas-e-formularios/">Camadas e formulários do projeto</a>: escolher o que a equipe vê e preenche.</li>
@@ -1550,6 +1593,12 @@ projeto, qualquer que seja o estado atual dele.</p>
         
         <a href="#estados-do-projeto" data-active="false" data-depth="2">
             Estados do projeto
+        </a>
+        
+
+        
+        <a href="#concluir-e-reabrir" data-active="false" data-depth="2">
+            Concluir e reabrir
         </a>
         
 

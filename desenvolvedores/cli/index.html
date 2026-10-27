@@ -984,7 +984,7 @@ está autenticado. A matriz completa está em
 <td>não</td>
 </tr>
 <tr>
-<td><code>projects update</code>, <code>bundles retry</code>, <code>members add</code>, <code>set-role</code> e <code>remove</code>, <code>layers add</code> e <code>remove</code>, <code>surveys add</code> e <code>remove</code></td>
+<td><code>projects update</code>, <code>start</code>, <code>finish</code>, <code>reopen</code>, <code>bundles retry</code>, <code>members add</code>, <code>set-role</code> e <code>remove</code>, <code>layers add</code> e <code>remove</code>, <code>surveys add</code> e <code>remove</code></td>
 <td>criador ou gestor do projeto</td>
 <td>criador ou gestor do projeto</td>
 <td>criador ou gestor do projeto</td>
@@ -1137,6 +1137,8 @@ tn projects     list [--q &lt;texto&gt;] [--survey &lt;formulario&gt;] | get &lt
                 | update &lt;projeto&gt; [--name] [--slug] [--kind] [--description]
                   [--deadline | --clear-deadline] [--requires-review | --no-requires-review]
                   [--area &lt;arquivo&gt; | --clear-area]
+                | start &lt;projeto&gt; | finish &lt;projeto&gt; [--note &lt;texto&gt;]
+                | reopen &lt;projeto&gt; [--note &lt;texto&gt;] [--deadline &lt;data&gt;]
                 | archive &lt;projeto&gt;
                 | stats &lt;projeto&gt; [--tz] | team &lt;projeto&gt; [--tz]
                 | daily &lt;projeto&gt; (--days N | --all) [--collector &lt;pessoa&gt;] [--tz]
@@ -1223,9 +1225,18 @@ tn<span class="w"> </span>projects<span class="w"> </span>update<span class="w">
 tn<span class="w"> </span>projects<span class="w"> </span>get<span class="w"> </span>obra-br101
 tn<span class="w"> </span>projects<span class="w"> </span>archive<span class="w"> </span>obra-br101
 </code></pre></div>
-<p>Um projeto criado pelo <code>tn</code> nasce em rascunho, e nenhum comando muda o
-status: para colocá-lo em andamento, conclua o assistente do web app (veja
-<a href="../../projetos/">Projetos</a>).
+<p>Um projeto criado pelo <code>tn</code> nasce em rascunho. O status muda só por três
+comandos, os mesmos passos do web app (veja
+<a href="../../projetos/#concluir-e-reabrir">Concluir e reabrir</a>):</p>
+<div class="codehilite"><pre><span></span><code>tn<span class="w"> </span>projects<span class="w"> </span>start<span class="w"> </span>obra-br101
+tn<span class="w"> </span>projects<span class="w"> </span>finish<span class="w"> </span>obra-br101<span class="w"> </span>--note<span class="w"> </span><span class="s2">&quot;Campanha encerrada&quot;</span>
+tn<span class="w"> </span>projects<span class="w"> </span>reopen<span class="w"> </span>obra-br101<span class="w"> </span>--deadline<span class="w"> </span><span class="m">2026</span>-12-15
+</code></pre></div>
+<p><code>start</code> coloca um rascunho em andamento e exige a área. <code>finish</code> conclui um
+projeto em andamento e avisa a equipe por e-mail; <code>reopen</code> o reabre, com um
+novo prazo se você passar <code>--deadline</code>. Pedir um passo fora de ordem (concluir
+um rascunho, por exemplo) falha com a mensagem da API. <code>update</code> não muda o
+status.
 <code>update</code> muda só os campos que você passa; <code>--clear-deadline</code> e
 <code>--clear-area</code> apagam o prazo e a área. <code>get</code> mostra os campos do projeto e,
 em tabelas separadas, suas camadas (a de cima primeiro, como na lista de
