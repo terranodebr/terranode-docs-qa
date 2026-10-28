@@ -935,28 +935,57 @@
   <div class="typography w-full flex-1 *:data-[slot=alert]:first:mt-0">
     <h1 id="sua-conta">Sua conta<a class="headerlink" href="#sua-conta" title="Permanent link">&para;</a></h1>
 <p>Você usa uma única conta para tudo no terranode: o web app, o aplicativo de
-campo e a linha de comando. Não existe uma página de cadastro. Quem decide
-quem entra em uma organização é quem a administra, por meio de convites, e
-cada pessoa já chega com o papel que vai ter. Esta página explica como a conta
-é criada e como entrar em cada lugar.</p>
-<p>Sua conta no terranode nasce de um convite. Não existe cadastro público: a
-equipe terranode cria a organização e o primeiro Gestor, e a partir daí cada
-Gestor convida as outras pessoas. Quando você aceita o convite, a conta é
-criada (ou a organização é adicionada à conta que você já tem) e você entra
-direto no web app.</p>
+campo e a linha de comando. Quem decide quem entra em uma organização é quem
+a administra, por meio de convites, e cada pessoa já chega com o papel que vai
+ter. Esta página explica como a conta é criada e como entrar em cada lugar.</p>
 <p>Esta página vale para todo mundo, qualquer que seja o papel. Para convidar
 alguém, veja <a href="../membros/">Membros e convites</a>.</p>
 <h2 id="como-a-conta-nasce">Como a conta nasce<a class="headerlink" href="#como-a-conta-nasce" title="Permanent link">&para;</a></h2>
 <p>Há duas situações:</p>
 <ul>
-<li><strong>Sua organização ainda não existe no terranode.</strong> A equipe terranode cria a
-  organização e cadastra a primeira pessoa como Gestor. Combine isso com o seu
-  contato na terranode.</li>
+<li><strong>Sua organização ainda não existe no terranode.</strong> Se a tela de entrada
+  mostra <strong>Criar conta</strong>, você mesmo cria a conta e a organização e entra
+  nela como Gestor; veja <a href="#criar-uma-conta-e-uma-organizacao">Criar uma conta e uma organização</a>.
+  Se a tela mostra <strong>Fale com o administrador</strong>, o cadastro não está aberto:
+  a equipe terranode cria a organização e cadastra a primeira pessoa como
+  Gestor. Combine isso com o seu contato na terranode.</li>
 <li><strong>Sua organização já existe.</strong> Um Gestor envia um convite para o seu e-mail.
-  Ao aceitar, você vira membro com o papel escolhido por quem convidou.</li>
+  Ao aceitar, você vira membro com o papel escolhido por quem convidou. Não
+  use <strong>Criar conta</strong> nesse caso: ela cria uma organização nova, separada da
+  que convidou você.</li>
 </ul>
-<p>A tela de entrada não tem botão de cadastro. Se você chegou nela sem convite,
-peça um a quem administra a sua organização.</p>
+<h2 id="criar-uma-conta-e-uma-organizacao">Criar uma conta e uma organização<a class="headerlink" href="#criar-uma-conta-e-uma-organizacao" title="Permanent link">&para;</a></h2>
+<p>Disponível quando a tela de entrada mostra <strong>Não tem uma conta? Criar conta</strong>.
+O cadastro tem quatro etapas, e quem o faz vira o Gestor da organização.</p>
+<ol>
+<li><strong>Conta.</strong> Em <strong>Criar conta</strong>, informe <strong>Seu nome</strong>, o <strong>E-mail de
+   trabalho</strong> e a <strong>Senha</strong> duas vezes, e aceite os Termos de uso e a Política
+   de privacidade. Escolha <strong>Criar conta</strong>: você já entra no web app.</li>
+<li><strong>Confirmação.</strong> Abra o link do e-mail "Confirme seu endereço no
+   TerraNode", neste ou em outro aparelho. A página do cadastro percebe a
+   confirmação sozinha em poucos segundos e segue para a próxima etapa. Se o
+   e-mail não chegar, use <strong>Reenviar link</strong>.</li>
+<li><strong>Organização.</strong> Informe o <strong>Nome da organização</strong> e, se quiser, o
+   <strong>Site</strong>. Escolha <strong>Criar organização</strong>.</li>
+<li><strong>Equipe.</strong> Convide quem vai trabalhar com você, uma linha por pessoa, cada
+   uma com o seu papel. Colar uma lista de e-mails cria uma linha por
+   endereço. Escolha <strong>Enviar convites</strong> ou <strong>Pular por agora</strong>: dá para
+   convidar depois, em <a href="../membros/">Membros e convites</a>.</li>
+</ol>
+<p>No fim, a página <strong>Tudo pronto</strong> resume a organização e os convites enviados
+e sugere os próximos passos. Se você sair no meio do cadastro, ao entrar de
+novo o web app volta para a etapa que falta.</p>
+<!-- screenshot: etapa Conta do cadastro, com os campos e a lista de requisitos da senha -->
+
+<p>Regras que valem aqui:</p>
+<ul>
+<li>A senha segue as mesmas regras da senha de convite, abaixo. A página mostra
+  quais requisitos já foram atendidos enquanto você digita.</li>
+<li>Um e-mail só pode ter uma conta. Se o endereço já tem conta, entre com ela
+  ou use <strong>Esqueceu a senha?</strong>.</li>
+<li>Cada conta cria uma organização por este caminho. Uma conta que já é membro
+  de uma organização não vê o cadastro.</li>
+</ul>
 <h2 id="aceitar-um-convite">Aceitar um convite<a class="headerlink" href="#aceitar-um-convite" title="Permanent link">&para;</a></h2>
 <p>O convite chega por e-mail com o assunto "Você foi convidado para
 <em>organização</em> no TerraNode". O link vale por 7 dias e funciona uma única vez.</p>
@@ -994,6 +1023,11 @@ organização até a confirmação.</p>
 <li>O link vale por 3 dias e funciona uma única vez.</li>
 <li>Se o link expirou, entre no web app e use <strong>Enviar novo link</strong>. O novo
   e-mail vai para o endereço da sua conta.</li>
+<li>A tela percebe sozinha, em poucos segundos, quando o endereço é confirmado
+  em outra aba ou aparelho. Quem abre o link em um navegador sem sessão vê
+  "Endereço confirmado. Entre para continuar." e o link <strong>Entrar</strong>.</li>
+<li>Durante o cadastro, essa tela é a etapa <strong>Confirmação</strong>, com o botão
+  <strong>Reenviar link</strong>.</li>
 </ul>
 <!-- screenshot: tela "Confirme seu endereço" com os botões Enviar novo link e Sair -->
 
@@ -1049,12 +1083,15 @@ entrar. As sessões abertas no navegador continuam valendo.</p>
 </div>
 <p>Hoje não há como trocar a senha ou o e-mail de dentro do web app. Para trocar
 a senha, use o fluxo acima mesmo sabendo a senha atual.</p>
-<h2 id="nenhuma-organizacao-disponivel">Nenhuma organização disponível<a class="headerlink" href="#nenhuma-organizacao-disponivel" title="Permanent link">&para;</a></h2>
-<p>Se você entra e vê <strong>Nenhuma organização disponível</strong> na página de projetos,
-sua conta existe mas não faz parte de nenhuma organização ativa. Isso
-acontece quando você foi removido de uma organização ou quando ela foi
-desativada. Peça um novo convite a um Gestor: aceitar o convite reativa a sua
-participação.</p>
+<h2 id="conta-sem-organizacao">Conta sem organização<a class="headerlink" href="#conta-sem-organizacao" title="Permanent link">&para;</a></h2>
+<p>Se você entra e vê <strong>Sua conta não está em nenhuma organização</strong>, sua conta
+existe mas não faz parte de nenhuma organização ativa. Isso acontece quando
+você foi removido de uma organização ou quando ela foi desativada. Peça um
+novo convite a um Gestor: aceitar o convite reativa a sua participação. A
+tela só oferece <strong>Sair</strong>.</p>
+<p>Onde o cadastro está aberto, a mesma conta vê a etapa <strong>Crie sua
+organização</strong> em vez dessa tela. Crie uma organização só se for mesmo uma
+nova; para voltar à antiga, peça o convite.</p>
 <h2 id="mais-de-uma-organizacao">Mais de uma organização<a class="headerlink" href="#mais-de-uma-organizacao" title="Permanent link">&para;</a></h2>
 <p>Uma conta pode ser membro de várias organizações, cada uma com o seu papel.</p>
 <ul>
@@ -1424,6 +1461,12 @@ participação.</p>
         
 
         
+        <a href="#criar-uma-conta-e-uma-organizacao" data-active="false" data-depth="2">
+            Criar uma conta e uma organização
+        </a>
+        
+
+        
         <a href="#aceitar-um-convite" data-active="false" data-depth="2">
             Aceitar um convite
         </a>
@@ -1448,8 +1491,8 @@ participação.</p>
         
 
         
-        <a href="#nenhuma-organizacao-disponivel" data-active="false" data-depth="2">
-            Nenhuma organização disponível
+        <a href="#conta-sem-organizacao" data-active="false" data-depth="2">
+            Conta sem organização
         </a>
         
 
