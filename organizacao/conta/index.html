@@ -981,7 +981,8 @@ novo o web app volta para a etapa que falta.</p>
 <ul>
 <li>A senha segue as mesmas regras da senha de convite, abaixo. A página mostra
   quais requisitos já foram atendidos enquanto você digita.</li>
-<li>Um e-mail só pode ter uma conta. Se o endereço já tem conta, entre com ela
+<li>Um e-mail só pode ter uma conta, sem distinguir maiúsculas de minúsculas.
+  Se o endereço já tem conta, entre com ela
   ou use <strong>Esqueceu a senha?</strong>.</li>
 <li>Cada conta cria uma organização por este caminho. Uma conta que já é membro
   de uma organização não vê o cadastro.</li>
@@ -993,7 +994,9 @@ novo o web app volta para a etapa que falta.</p>
 <li>Abra o link do e-mail. A página mostra <strong>Entre para <em>organização</em></strong> e o
    papel com que você foi convidado.</li>
 <li>Se o seu e-mail ainda não tem conta, preencha <strong>Seu nome</strong> e escolha uma
-   <strong>Senha</strong>. Se já tem, a página avisa que aceitar adiciona esta organização
+   <strong>Senha</strong>. Uma conta existente ainda não verificada também precisa de uma
+   nova senha; o aceite encerra suas sessões e tokens anteriores. Se a conta
+   já foi verificada, a página avisa que aceitar adiciona esta organização
    à sua conta e não pede senha.</li>
 <li>Escolha <strong>Aceitar convite</strong>. Você entra no web app e vai direto para
    <strong>Projetos</strong>.</li>
@@ -1079,7 +1082,7 @@ regras da senha de convite.</p>
 <p>Ao salvar a nova senha, todas as sessões abertas no app de campo e na
 linha de comando são encerradas na hora. Entre de novo em cada aparelho e
 rode <code>tn auth login</code> outra vez. O app registra o aparelho novamente ao
-entrar. As sessões abertas no navegador continuam valendo.</p>
+entrar. As sessões abertas no navegador também são invalidadas.</p>
 </div>
 <p>Hoje não há como trocar a senha ou o e-mail de dentro do web app. Para trocar
 a senha, use o fluxo acima mesmo sabendo a senha atual.</p>
