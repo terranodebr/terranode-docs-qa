@@ -1149,10 +1149,10 @@ tn uploads      create &lt;catalogo&gt; &lt;arquivo&gt; [--wait] | list &lt;cata
                 | get &lt;catalogo&gt; &lt;id&gt; [--wait] | delete &lt;catalogo&gt; &lt;id&gt;
 tn projects     list [--q &lt;texto&gt;] [--survey &lt;formulario&gt;] | get &lt;projeto&gt;
                 | create --name &lt;nome&gt; [--slug] [--kind] [--description] [--deadline]
-                  [--requires-review] [--area &lt;arquivo&gt;]
+                  [--requires-review] [--encrypted] [--area &lt;arquivo&gt;]
                 | update &lt;projeto&gt; [--name] [--slug] [--kind] [--description]
                   [--deadline | --clear-deadline] [--requires-review | --no-requires-review]
-                  [--area &lt;arquivo&gt; | --clear-area]
+                  [--encrypted | --no-encrypted] [--area &lt;arquivo&gt; | --clear-area]
                 | start &lt;projeto&gt; | finish &lt;projeto&gt; [--note &lt;texto&gt;]
                 | reopen &lt;projeto&gt; [--note &lt;texto&gt;] [--deadline &lt;data&gt;]
                 | archive &lt;projeto&gt;
@@ -1236,11 +1236,15 @@ e erros de processamento estão em
 envio concluído. <code>datasources delete</code> remove a fonte e seus dados.</p>
 <h3 id="projetos">Projetos<a class="headerlink" href="#projetos" title="Permanent link">&para;</a></h3>
 <div class="codehilite"><pre><span></span><code>tn<span class="w"> </span>projects<span class="w"> </span>create<span class="w"> </span>--name<span class="w"> </span><span class="s2">&quot;Obra BR-101&quot;</span><span class="w"> </span>--deadline<span class="w"> </span><span class="m">2026</span>-12-31<span class="w"> </span>--requires-review<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--area<span class="w"> </span>./trecho.geojson
+<span class="w">  </span>--encrypted<span class="w"> </span>--area<span class="w"> </span>./trecho.geojson
 tn<span class="w"> </span>projects<span class="w"> </span>update<span class="w"> </span>obra-br101<span class="w"> </span>--name<span class="w"> </span><span class="s2">&quot;Obra BR-101 (lote 2)&quot;</span><span class="w"> </span>--clear-deadline
 tn<span class="w"> </span>projects<span class="w"> </span>get<span class="w"> </span>obra-br101
 tn<span class="w"> </span>projects<span class="w"> </span>archive<span class="w"> </span>obra-br101
 </code></pre></div>
+<p><code>--encrypted</code> é a opção <strong>Criptografar no dispositivo</strong> do web app (veja
+<a href="../../projetos/#passo-1-detalhes">Passo 1: Detalhes</a>). <code>update --encrypted</code>/<code>--no-encrypted</code> só
+funciona enquanto o projeto é um rascunho; depois disso o comando falha com a
+mensagem do servidor.</p>
 <p>Um projeto criado pelo <code>tn</code> nasce em rascunho. O status muda só por três
 comandos, os mesmos passos do web app (veja
 <a href="../../projetos/#concluir-e-reabrir">Concluir e reabrir</a>):</p>
