@@ -993,8 +993,9 @@ em <code>https://&lt;api&gt;/api/v1/ogc/openapi.json</code>; os dois também ped
   o slug da sua organização no endereço, mesmo para um catálogo público.</li>
 <li>Se um catálogo seu tiver o mesmo slug de um catálogo público, o slug é
   recusado como ambíguo; use o id do catálogo.</li>
-<li>Só fontes vetoriais com geometria viram coleções. Rasters e fontes
-  <strong>Sem geometria</strong> ficam de fora.</li>
+<li>Fontes vetoriais viram coleções, inclusive as <strong>Sem geometria</strong>: as feições
+  dessas saem com <code>"geometry": null</code> e o filtro <code>bbox</code> não as restringe.
+  Rasters ficam de fora.</li>
 <li>O id de cada coleção é o slug da fonte de dados; o id de cada feição é o
   número da linha na tabela.</li>
 <li>As geometrias saem em WGS84 (EPSG:4326), no formato GeoJSON.</li>

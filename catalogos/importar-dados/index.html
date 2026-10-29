@@ -941,7 +941,7 @@ está, e o terranode abre, converte e prepara cada camada para aparecer no mapa
 e no aplicativo.</p>
 <p>Você traz dados para um catálogo enviando arquivos. Cada arquivo enviado é um
 envio; o terranode lê o que há dentro dele e cria uma fonte de dados para cada
-camada vetorial ou raster que encontrar. Para o que é um catálogo e uma fonte
+camada vetorial, tabela ou raster que encontrar. Para o que é um catálogo e uma fonte
 de dados, veja <a href="../">Catálogos e fontes de dados</a>.</p>
 <p>Gestores e Editores podem enviar arquivos; Coletores não têm acesso aos
 catálogos. Envios só são aceitos em catálogos de origem <strong>Gerenciado</strong>:
@@ -973,8 +973,13 @@ e recusam envios manuais.</p>
 <td>Arquivo solto ou em <code>.zip</code></td>
 </tr>
 <tr>
-<td>Vetor</td>
-<td>CSV (<code>.csv</code>) com colunas de coordenadas</td>
+<td>Vetor ou tabela</td>
+<td>CSV (<code>.csv</code>), com ou sem colunas de coordenadas</td>
+<td>Arquivo solto ou em <code>.zip</code></td>
+</tr>
+<tr>
+<td>Vetor ou tabela</td>
+<td>Planilha Excel (<code>.xlsx</code>) ou OpenDocument (<code>.ods</code>)</td>
 <td>Arquivo solto ou em <code>.zip</code></td>
 </tr>
 <tr>
@@ -986,14 +991,24 @@ e recusam envios manuais.</p>
 </table></div>
 <p>Um <code>.zip</code> pode conter vários conjuntos de dados ao mesmo tempo, inclusive em
 subpastas; cada um vira um item do envio. Arquivos com outra extensão são
-recusados na hora com <strong>Tipo de arquivo não suportado</strong>.</p>
+recusados na hora com <strong>Tipo de arquivo não suportado</strong>. Isso inclui o Excel
+antigo (<code>.xls</code>): abra no Excel ou no LibreOffice e salve como <code>.xlsx</code>.</p>
+<p>Uma camada sem geometria, como uma tabela de GeoPackage, um CSV sem
+coordenadas ou uma aba de planilha, vira uma fonte do tipo <strong>Sem geometria</strong>.
+Ela tem tabela de atributos e pode servir de base para um formulário, mas não
+aparece no mapa.</p>
 <h3 id="o-que-os-dados-precisam-ter">O que os dados precisam ter<a class="headerlink" href="#o-que-os-dados-precisam-ter" title="Permanent link">&para;</a></h3>
 <ul>
 <li><strong>Sistema de referência (CRS) definido</strong>, vetor ou raster. Um CRS de
   engenharia ou local, sem referência à Terra, faz o item falhar.</li>
-<li><strong>CSV</strong>: uma coluna chamada <code>longitude</code>, <code>lon</code>, <code>long</code> ou <code>x</code> e outra
-  chamada <code>latitude</code>, <code>lat</code> ou <code>y</code>. As coordenadas são lidas como WGS84. Um
-  CSV sem essas colunas não tem geometria e o item é ignorado.</li>
+<li><strong>CSV</strong>: para virar pontos, uma coluna chamada <code>longitude</code>, <code>lon</code>, <code>long</code>
+  ou <code>x</code> e outra chamada <code>latitude</code>, <code>lat</code> ou <code>y</code>. As coordenadas são lidas
+  como WGS84. Um CSV sem essas colunas vira uma tabela sem geometria.</li>
+<li><strong>Planilha</strong>: cada aba vira uma fonte, e a primeira linha de cada aba é
+  sempre o cabeçalho. Uma aba vazia ou só com o cabeçalho é ignorada. Uma aba
+  com colunas de coordenadas, com os mesmos nomes do CSV, vira pontos em
+  WGS84. As coordenadas precisam ser números: uma linha com coordenada vazia,
+  com texto (<code>n/d</code>) ou com vírgula decimal digitada como texto fica sem ponto.</li>
 <li><strong>Shapefile</strong> sem codificação declarada: o texto é lido como UTF-8 e, se não
   for válido, como ISO-8859-1.</li>
 </ul>
@@ -1021,8 +1036,9 @@ recusados na hora com <strong>Tipo de arquivo não suportado</strong>.</p>
 </tbody>
 </table></div>
 <p>O diálogo conta os itens antes de enviar (entradas do zip, tabelas do
-GeoPackage) e recusa a seleção se passar do limite. Para enviar mais, divida
-em vários envios.</p>
+GeoPackage) e recusa a seleção se passar do limite. Uma planilha conta como um
+item no diálogo, mas cada aba vira um item no processamento. Para enviar mais,
+divida em vários envios.</p>
 <h2 id="enviar-pelo-web-app">Enviar pelo web app<a class="headerlink" href="#enviar-pelo-web-app" title="Permanent link">&para;</a></h2>
 <ol>
 <li>Abra o catálogo e escolha <strong>Enviar dados</strong>.</li>
@@ -1043,10 +1059,12 @@ no cartão até você recarregar a página, para que você veja o motivo.</p>
 <ul>
 <li>O terranode abre o arquivo e descobre o que há dentro: uma camada vetorial
   ou um raster vira um item; um GeoPackage com três tabelas vira três itens;
-  um zip com dois shapefiles e um GeoTIFF vira três itens.</li>
+  uma planilha com quatro abas vira quatro itens; um zip com dois shapefiles e
+  um GeoTIFF vira três itens.</li>
 <li>Cada item bem-sucedido vira <strong>uma fonte de dados</strong>. O nome é o nome da
-  camada ou, se não houver, o nome do arquivo sem extensão. Você pode renomear
-  depois em <strong>Configurações</strong>.</li>
+  camada ou, se não houver, o nome do arquivo sem extensão. A aba de uma
+  planilha vira <code>&lt;arquivo&gt; - &lt;aba&gt;</code>, por exemplo <code>inventario - Planilha1</code>.
+  Você pode renomear depois em <strong>Configurações</strong>.</li>
 <li>Dados vetoriais são convertidos para WGS84 (EPSG:4326), as geometrias
   inválidas são corrigidas e os nomes das colunas ficam em minúsculas, com
   apóstrofo, hífen e <code>#</code> trocados por <code>_</code>. Pontos, linhas e polígonos passam a
@@ -1103,7 +1121,11 @@ resultado: <strong>Concluído</strong>, <strong>Falhou</strong> (com a mensagem 
 </tr>
 <tr>
 <td>Item <strong>Ignorado</strong></td>
-<td>A camada não tem geometria (tabela sem coordenadas, CSV sem colunas <code>lon</code>/<code>lat</code>). Adicione as coordenadas e envie de novo.</td>
+<td>A tabela ou aba não tem registros (vazia ou só com o cabeçalho). Preencha os dados e envie de novo.</td>
+</tr>
+<tr>
+<td>"a column named geometry conflicts with the layer's geometry; rename it"</td>
+<td>A camada tem geometria (ou colunas de coordenadas) e também uma coluna chamada <code>geometry</code>. Renomeie essa coluna e envie de novo.</td>
 </tr>
 <tr>
 <td>"vector source must use an earth-referenced CRS"</td>
