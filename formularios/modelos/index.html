@@ -940,23 +940,35 @@ projetos seguem o mesmo padrão, e a equipe pode aproveitar roteiros baseados
 em normas que o terranode já fornece, mudando só o que for necessário.</p>
 <p>Um modelo é uma lista de campos pronta para reaproveitar: você cria um
 formulário a partir dele e revisa antes de publicar. Na interface, os modelos
-aparecem como <strong>Templates</strong>, na aba <strong>Templates</strong> da página <strong>Formulários</strong>.
+aparecem como <strong>Templates</strong>: em <strong>Começar por um template</strong>, no topo da
+página <strong>Formulários</strong>, e no painel de templates.
 Há dois tipos: modelos da organização, que vocês criam e editam, e modelos
 do sistema, fornecidos pelo terranode e somente leitura.</p>
 <p>Gestores (<code>owner</code>) e Editores (<code>editor</code>) criam e editam modelos da
 organização e criam formulários a partir de qualquer modelo. Coletores
-(<code>field</code>) veem a aba <strong>Templates</strong>, mas não abrem nem usam os modelos. A
+(<code>field</code>) veem os modelos e a estrutura de cada um, mas não editam nem usam
+os modelos. A
 matriz completa está em
 <a href="../../organizacao/papeis-e-permissoes/">Papéis e permissões</a>.</p>
-<h2 id="a-aba-templates">A aba Templates<a class="headerlink" href="#a-aba-templates" title="Permanent link">&para;</a></h2>
-<p>A aba lista os modelos da organização e os do sistema juntos, com nome,
-tags, quem criou e a data da última modificação. Modelos do sistema levam o
-selo <strong>Sistema</strong> e não têm criador. A busca encontra pelo nome ou por uma
-tag; a lista mostra 25 por página, em ordem alfabética.</p>
-<p>Clicar em um modelo da organização abre o construtor dele para edição.
-Clicar em um modelo do sistema abre o construtor de um formulário novo já
-com os campos do modelo, porque o modelo em si não pode ser alterado.</p>
-<!-- screenshot: aba Templates com modelos da organização e do sistema, mostrando o selo Sistema e as tags -->
+<h2 id="o-painel-de-templates">O painel de templates<a class="headerlink" href="#o-painel-de-templates" title="Permanent link">&para;</a></h2>
+<p><strong>Começar por um template</strong> mostra, em uma linha, quantos modelos couberem na
+largura da tela, os do sistema primeiro. Cada cartão traz as tags, o
+assunto, a norma e o número de campos. Clicar em um cartão abre o painel de
+templates nele; <strong>Ver os N templates</strong> abre o painel com todos.</p>
+<p>O painel lista os modelos da organização e os do sistema juntos, em ordem
+alfabética. Modelos do sistema levam o selo <strong>Sistema</strong>. A busca encontra
+pelo nome ou pela descrição, e as tags acima da lista filtram por área.
+Clicar em um modelo mostra a descrição e os primeiros campos, com o tipo de
+cada um; clicar de novo fecha. No rodapé:</p>
+<ul>
+<li><strong>Usar template</strong> abre o construtor de um formulário novo com os campos do
+  modelo.</li>
+<li><strong>Editar</strong>, só em modelos da organização, abre o construtor do modelo.</li>
+<li><strong>Novo template</strong> abre o construtor de um modelo vazio.</li>
+</ul>
+<p>Um modelo no formato antigo leva o selo <strong>Formato antigo</strong> e não pode ser
+usado.</p>
+<!-- screenshot: painel de templates com um modelo do sistema aberto, mostrando o selo Sistema, as tags e a estrutura -->
 
 <h2 id="modelos-do-sistema">Modelos do sistema<a class="headerlink" href="#modelos-do-sistema" title="Permanent link">&para;</a></h2>
 <p>São formulários baseados em normas e roteiros oficiais, iguais para todas as
@@ -998,11 +1010,11 @@ adaptá-los, crie um formulário a partir deles e salve-o como modelo da
 organização.</p>
 <h2 id="criar-um-formulario-a-partir-de-um-modelo">Criar um formulário a partir de um modelo<a class="headerlink" href="#criar-um-formulario-a-partir-de-um-modelo" title="Permanent link">&para;</a></h2>
 <ol>
-<li>Na página <strong>Formulários</strong>, escolha <strong>Novo formulário</strong> e depois
-   <strong>A partir de um template</strong>. Ou clique direto em um modelo do sistema na
-   aba <strong>Templates</strong>.</li>
-<li>Procure pelo nome ou pela tag em <strong>Buscar template</strong> e escolha
-   <strong>Abrir template</strong> no modelo desejado.</li>
+<li>Na página <strong>Formulários</strong>, escolha <strong>Novo formulário</strong>, depois
+   <strong>A partir de um template</strong> e <strong>Continuar</strong>. Ou clique em um modelo em
+   <strong>Começar por um template</strong>.</li>
+<li>Procure pelo nome em <strong>Buscar template</strong> ou filtre por uma tag e escolha o
+   modelo. A prévia mostra os campos dele. Escolha <strong>Usar template</strong>.</li>
 <li>O construtor abre com os campos copiados e o nome em branco. Revise,
    dê um nome e escolha <strong>Publicar</strong>. Nada é criado antes disso.</li>
 </ol>
@@ -1013,7 +1025,7 @@ na abertura. Veja <a href="../tipos-de-campo/">Tipos de campo</a>.</p>
 <h2 id="criar-e-editar-um-modelo-da-organizacao">Criar e editar um modelo da organização<a class="headerlink" href="#criar-e-editar-um-modelo-da-organizacao" title="Permanent link">&para;</a></h2>
 <p>Há dois caminhos:</p>
 <ul>
-<li><strong>Novo template</strong>, no menu <strong>Novo formulário</strong>: abre o construtor de
+<li><strong>Novo template</strong>, no rodapé do painel de templates: abre o construtor de
   modelo vazio.</li>
 <li><strong>Salvar cópia como template</strong>, no cabeçalho do construtor de um
   formulário: os campos atuais do formulário, inclusive alterações ainda não
@@ -1391,8 +1403,8 @@ criados a partir do modelo não são afetados.</p>
         
         
         
-        <a href="#a-aba-templates" data-active="false" data-depth="2">
-            A aba Templates
+        <a href="#o-painel-de-templates" data-active="false" data-depth="2">
+            O painel de templates
         </a>
         
 

@@ -949,48 +949,52 @@ construtor: o botão <strong>Novo formulário</strong> e a ação <strong>Duplic
 desabilitados para eles. A matriz completa está em
 <a href="../organizacao/papeis-e-permissoes/">Papéis e permissões</a>.</p>
 <h2 id="a-pagina-formularios">A página Formulários<a class="headerlink" href="#a-pagina-formularios" title="Permanent link">&para;</a></h2>
-<p>A página tem duas abas: <strong>Templates</strong>, que abre por padrão, e
-<strong>Formulários</strong>. O título de cada aba mostra a quantidade, como
-<strong>Formulários (12)</strong>. Os modelos são explicados em
+<p>No topo, <strong>Começar por um template</strong> mostra uma linha de modelos, os do
+sistema primeiro. Clicar em um abre o painel de templates nele, e
+<strong>Ver os N templates</strong> abre o painel com todos. Os modelos são explicados em
 <a href="modelos/">Modelos de formulário</a>.</p>
-<p>Na aba <strong>Formulários</strong>, cada linha mostra o nome, quem criou, a data da
-última modificação e em quantos projetos o formulário está em uso. Clicar na
-linha abre o construtor. A busca filtra pelo nome; a lista mostra 25 por
-página, em ordem alfabética.</p>
+<p>Abaixo, <strong>Formulários da Organização</strong> lista os formulários. Cada linha
+mostra o nome e o identificador, em quantos projetos o formulário está em
+uso, quem criou e a data da última modificação. Clicar na linha abre o
+construtor. A busca filtra pelo nome; a lista mostra 25 por página, em ordem
+alfabética.</p>
 <p>O menu da linha oferece só <strong>Duplicar</strong>. Não existe ação de exclusão nesta
 página; veja <a href="#excluir-um-formulario">Excluir um formulário</a>.</p>
-<!-- screenshot: página Formulários na aba Formulários, com a busca, as colunas da lista e o botão Novo formulário -->
+<!-- screenshot: página Formulários com a linha Começar por um template, a busca, as colunas da lista e o botão Novo formulário -->
 
 <h2 id="criar-um-formulario">Criar um formulário<a class="headerlink" href="#criar-um-formulario" title="Permanent link">&para;</a></h2>
-<p>O botão <strong>Novo formulário</strong> abre um menu com quatro pontos de partida:</p>
+<p>O botão <strong>Novo formulário</strong> abre uma janela em dois passos. Em <strong>Origem</strong>,
+você escolhe por onde começar e a prévia ao lado mostra o que vem a seguir.
+No segundo passo, você escolhe a fonte e a prévia mostra os campos que o
+formulário vai ter. <strong>Voltar</strong> retorna à origem sem perder a escolha.</p>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
-<th>Opção</th>
-<th>O que acontece</th>
+<th>Origem</th>
+<th>Segundo passo</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><strong>Em branco</strong></td>
-<td>Abre o construtor vazio. Nada é salvo até você publicar.</td>
+<td>Não tem: <strong>Abrir o editor</strong> abre o construtor vazio. Nada é salvo até você publicar.</td>
 </tr>
 <tr>
 <td><strong>A partir de um template</strong></td>
-<td>Você escolhe um modelo e o construtor abre com os campos dele copiados. Nada é salvo até você publicar. Veja <a href="modelos/">Modelos de formulário</a>.</td>
+<td>Você escolhe um modelo, vê os campos dele na prévia e escolhe <strong>Usar template</strong>. O construtor abre com os campos copiados; nada é salvo até você publicar. Veja <a href="modelos/">Modelos de formulário</a>.</td>
 </tr>
 <tr>
 <td><strong>A partir de um datasource</strong></td>
-<td>Você escolhe um catálogo e uma fonte de dados vetorial da organização e dá um nome. O formulário é criado na hora, com um campo por coluna, e o construtor abre para revisão.</td>
+<td>Você dá um nome e escolhe um catálogo e uma fonte de dados vetorial da organização. A prévia mostra as colunas e o campo que cada uma vira. <strong>Gerar formulário</strong> cria o formulário na hora, com um campo por coluna, e o construtor abre para revisão.</td>
 </tr>
 <tr>
 <td><strong>Importar do Survey123</strong></td>
-<td>Você envia o XLSForm e o formulário é criado na hora. Veja <a href="importar-survey123/">Importar do Survey123</a>.</td>
+<td>Você envia o XLSForm e escolhe <strong>Importar</strong>. O formulário é criado na hora. Veja <a href="importar-survey123/">Importar do Survey123</a>.</td>
 </tr>
 </tbody>
 </table></div>
-<p>O mesmo menu oferece <strong>Novo template</strong>, para criar um modelo em vez de um
-formulário.</p>
+<p>Para criar um modelo em vez de um formulário, use <strong>Novo template</strong> no
+painel de templates (veja <a href="modelos/">Modelos de formulário</a>).</p>
 <h3 id="a-partir-de-uma-fonte-de-dados">A partir de uma fonte de dados<a class="headerlink" href="#a-partir-de-uma-fonte-de-dados" title="Permanent link">&para;</a></h3>
 <p>Só fontes de dados vetoriais da própria organização servem de origem:
 catálogos públicos, fontes raster e fontes sem tabela não aparecem na lista.
