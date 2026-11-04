@@ -977,6 +977,16 @@ detalhes busca na <a href="../api/">API</a> com uma chave de API.</p>
   de todos.</li>
 </ul>
 <p>Uma organização pode ter até 20 webhooks.</p>
+<p>No web app, <strong>Novo webhook</strong> abre um assistente em três passos: <strong>Destino</strong>
+(endereço e descrição), <strong>Eventos</strong> e <strong>Projetos</strong>. Ao lado de cada passo, a
+<strong>Prévia</strong> mostra a requisição que o seu sistema vai receber: o <code>POST</code> para o
+endereço, os cabeçalhos e o corpo JSON do evento. Clique num evento para ver o
+exemplo dele. Ao escolher um projeto, o exemplo passa a mostrar esse projeto.</p>
+<p>Depois de criar, o assistente mostra o segredo e um exemplo de verificação em
+Python e em Node.js. No exemplo, o segredo vai numa linha do <code>.env</code>, e o código
+lê essa variável, então o segredo não fica gravado no código. Ao gerar um novo
+segredo na página do webhook, aparece o mesmo exemplo. Pela API, o exemplo de
+cada tipo vem no campo <code>example</code> de <code>GET /api/v1/webhooks/event-types</code>.</p>
 <h2 id="eventos">Eventos<a class="headerlink" href="#eventos" title="Permanent link">&para;</a></h2>
 <div class="table-wrapper"><table>
 <thead>
@@ -1106,15 +1116,16 @@ cabeçalhos:</p>
 cria o webhook ou troca o segredo. Guarde-o num cofre.</p>
 <p>A forma mais simples de verificar é usar uma biblioteca da especificação, que
 existe para várias linguagens. Em Python:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">standardwebhooks.webhooks</span><span class="w"> </span><span class="kn">import</span> <span class="n">Webhook</span>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">standardwebhooks.webhooks</span><span class="w"> </span><span class="kn">import</span> <span class="n">Webhook</span>
 
-<span class="n">webhook</span> <span class="o">=</span> <span class="n">Webhook</span><span class="p">(</span><span class="n">segredo</span><span class="p">)</span>  <span class="c1"># &quot;whsec_...&quot;</span>
+<span class="n">webhook</span> <span class="o">=</span> <span class="n">Webhook</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;TERRANODE_WEBHOOK_SECRET&quot;</span><span class="p">])</span>  <span class="c1"># &quot;whsec_...&quot;</span>
 <span class="n">mensagem</span> <span class="o">=</span> <span class="n">webhook</span><span class="o">.</span><span class="n">verify</span><span class="p">(</span><span class="n">corpo_bruto</span><span class="p">,</span> <span class="n">cabecalhos</span><span class="p">)</span>  <span class="c1"># levanta exceção se for inválida</span>
 </code></pre></div>
 <p>Em Node.js:</p>
 <div class="codehilite"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">Webhook</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">&quot;standardwebhooks&quot;</span><span class="p">;</span>
 
-<span class="kd">const</span><span class="w"> </span><span class="nx">webhook</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Webhook</span><span class="p">(</span><span class="nx">segredo</span><span class="p">);</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">webhook</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Webhook</span><span class="p">(</span><span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">TERRANODE_WEBHOOK_SECRET</span><span class="p">);</span>
 <span class="kd">const</span><span class="w"> </span><span class="nx">mensagem</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">webhook</span><span class="p">.</span><span class="nx">verify</span><span class="p">(</span><span class="nx">corpoBruto</span><span class="p">,</span><span class="w"> </span><span class="nx">cabecalhos</span><span class="p">);</span>
 </code></pre></div>
 <p>Verifique sempre o corpo bruto, como chegou, antes de convertê-lo de JSON. A
