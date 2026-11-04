@@ -869,6 +869,21 @@
 </li>
             
             
+            
+            <li data-slot="sidebar-menu-item" data-sidebar="menu-item" class="group/menu-item relative">
+    <a data-slot="sidebar-menu-button" data-active="false" data-sidebar="menu-button"
+        data-size="default" href="../webhooks/"
+        class="peer/menu-button flex items-center gap-2 rounded-md p-2 text-left ring-sidebar-ring outline-hidden transition-[width,height,padding] group-has-data-[sidebar=menu-action]/menu-item:pr-8 group-data-[collapsible=icon]:size-8! group-data-[collapsible=icon]:p-2! focus-visible:ring-2 active:bg-sidebar-accent active:text-sidebar-accent-foreground disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-[active=true]:font-medium data-[active=true]:text-sidebar-accent-foreground data-[state=open]:hover:bg-sidebar-accent data-[state=open]:hover:text-sidebar-accent-foreground [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground relative h-[30px] w-fit overflow-visible border border-transparent text-[0.8rem] font-medium after:absolute after:inset-x-0 after:-inset-y-1 after:z-0 after:rounded-md data-[active=true]:border-accent data-[active=true]:bg-accent 3xl:fixed:w-full 3xl:fixed:max-w-48">
+        
+        Webhooks
+        
+        
+        
+        
+    </a>
+</li>
+            
+            
         </ul>
     </div>
 </div>
@@ -939,8 +954,8 @@ como enviar dezenas de arquivos, convidar uma lista de pessoas ou integrar o
 terranode a um pipeline. Tudo o que ela faz também pode ser feito pela API.</p>
 <p><code>tn</code> é o cliente de linha de comando do terranode. Com ele você entra na sua
 conta, administra membros, convites, chaves de API e dispositivos da
-organização, cria catálogos, envia arquivos e cria e acompanha projetos a
-partir de um terminal ou de um script. Tudo o que o <code>tn</code> faz passa pela mesma API pública descrita em
+organização, cria catálogos, envia arquivos, cria e acompanha projetos e
+configura webhooks a partir de um terminal ou de um script. Tudo o que o <code>tn</code> faz passa pela mesma API pública descrita em
 <a href="../api/">API e SDK</a>.</p>
 <div class="admonition note">
 <p class="admonition-title">Ainda não está no pip</p>
@@ -1011,8 +1026,23 @@ está autenticado. A matriz completa está em
 <td>gestor ou revisor do projeto</td>
 <td>gestor ou revisor do projeto</td>
 </tr>
+<tr>
+<td><code>webhooks list</code>, <code>get</code>, <code>event-types</code>, <code>deliveries</code>, <code>delivery</code></td>
+<td>sim</td>
+<td>não</td>
+<td>não</td>
+</tr>
+<tr>
+<td><code>webhooks create</code>, <code>update</code>, <code>pause</code>, <code>resume</code>, <code>delete</code>, <code>rotate-secret</code>, <code>test</code>, <code>redeliver</code></td>
+<td>sim</td>
+<td>não</td>
+<td>não</td>
+</tr>
 </tbody>
 </table></div>
+<p>Os comandos <code>tn webhooks</code> exigem a permissão <code>webhook:manage</code>, que só o papel
+Gestor tem; uma chave de API com papel <code>owner</code> também pode usá-los. Para
+qualquer outro papel, todos eles terminam com <code>Error:</code> e código 1.</p>
 <h2 id="entrar">Entrar<a class="headerlink" href="#entrar" title="Permanent link">&para;</a></h2>
 <p>Depois de instalar, o <code>tn</code> aponta para <code>http://localhost:8000</code>, o endereço de
 desenvolvimento local. Antes de qualquer outro comando, informe o endereço da
@@ -1127,8 +1157,8 @@ comando. <code>tn --install-completion</code> instala o autocompletar do seu she
 <h2 id="refs-id-ou-slug">Refs: id ou slug<a class="headerlink" href="#refs-id-ou-slug" title="Permanent link">&para;</a></h2>
 <p>Um ref é o valor que você digita para identificar algo. Organizações,
 catálogos, fontes de dados e projetos aceitam tanto o id (UUID, estável) quanto o slug
-mostrado nas listagens. Envios, chaves de API e dispositivos não têm slug e
-são sempre identificados pelo id. Membros e convites são identificados pelo
+mostrado nas listagens. Envios, chaves de API, dispositivos, webhooks e suas
+entregas não têm slug e são sempre identificados pelo id. Membros e convites são identificados pelo
 e-mail. Uma coleta é identificada pelo id ou pelo número que aparece no web
 app, como <code>RDO-DNIT097-00139</code>.</p>
 <p>Slugs são mais fáceis de digitar, mas podem mudar quando alguém renomeia o
@@ -1174,6 +1204,13 @@ tn projects responses list &lt;projeto&gt; [--state] [--q] [--collector] [--surv
                       | summary &lt;projeto&gt; [--q] [--collector] [--survey]
                       | get &lt;projeto&gt; &lt;coleta&gt;
                       | review &lt;projeto&gt; COLETA... (--approve | --reject | --reopen) [--comment]
+tn webhooks     list | get &lt;id&gt; | event-types
+                | create --url &lt;url&gt; --event &lt;tipo&gt;... [--description] [--project &lt;projeto&gt;]...
+                | update &lt;id&gt; [--url] [--description] [--event &lt;tipo&gt;]...
+                  [--project &lt;projeto&gt;... | --all-projects]
+                | pause &lt;id&gt; | resume &lt;id&gt; | delete &lt;id&gt; | rotate-secret &lt;id&gt; | test &lt;id&gt;
+                | deliveries &lt;id&gt; [--status pending|succeeded|failed]
+                | delivery &lt;id&gt; &lt;id-da-entrega&gt; | redeliver &lt;id&gt; &lt;id-da-entrega&gt;
 </code></pre></div>
 <p><code>&lt;papel&gt;</code> é sempre <code>owner</code>, <code>editor</code> ou <code>field</code>, o papel na organização.
 <code>&lt;papel-no-projeto&gt;</code> é <code>manager</code> (gestor), <code>collector</code> (coletor) ou
@@ -1455,9 +1492,62 @@ imprime uma linha por coleta, com um destes resultados:</p>
 </table></div>
 <p>As outras coletas são decididas mesmo quando uma falha, mas o comando termina
 com código 1 se alguma não foi decidida.</p>
+<h3 id="webhooks">Webhooks<a class="headerlink" href="#webhooks" title="Permanent link">&para;</a></h3>
+<p>Um webhook avisa outro sistema (um ERP, um painel, uma automação) do que
+acontece nos projetos e nos lotes sincronizados pelos dispositivos: o
+terranode faz um POST assinado para o endereço cadastrado a cada evento. O
+formato das mensagens, os cabeçalhos e como verificar a assinatura estão em
+<a href="../webhooks/">Webhooks</a>.</p>
+<div class="codehilite"><pre><span></span><code>tn<span class="w"> </span>webhooks<span class="w"> </span>event-types
+tn<span class="w"> </span>webhooks<span class="w"> </span>create<span class="w"> </span>--url<span class="w"> </span>https://erp.exemplo.com/hooks<span class="w"> </span>--description<span class="w"> </span><span class="s2">&quot;ERP&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--event<span class="w"> </span>project.finished<span class="w"> </span>--event<span class="w"> </span>batch.completed<span class="w"> </span>--project<span class="w"> </span>obra-br101
+tn<span class="w"> </span>webhooks<span class="w"> </span>list
+tn<span class="w"> </span>webhooks<span class="w"> </span>update<span class="w"> </span>&lt;id&gt;<span class="w"> </span>--event<span class="w"> </span>project.updated<span class="w"> </span>--all-projects
+tn<span class="w"> </span>webhooks<span class="w"> </span><span class="nb">test</span><span class="w"> </span>&lt;id&gt;
+</code></pre></div>
+<p><code>event-types</code> lista os tipos de evento que um webhook pode receber, com a
+descrição de cada um. Em <code>create</code>, <code>--event</code> é obrigatório e se repete para
+cada tipo; <code>--project</code>, repetido para cada projeto, limita o webhook aos
+eventos desses projetos (id ou slug). Sem <code>--project</code>, ele recebe os eventos
+de todos os projetos da organização. O endereço precisa usar HTTPS e não pode
+apontar para um endereço interno; um endereço recusado faz o comando terminar
+com a mensagem da API e código 1. Cada organização pode ter até 20 webhooks.</p>
+<p><code>create</code> imprime o webhook e o seu <strong>segredo</strong> (<code>whsec_...</code>) uma única vez:
+guarde-o na hora, é com ele que o sistema de destino verifica a assinatura.
+Com <code>--json</code>, o segredo vem no campo <code>secret</code>. Nenhum outro comando mostra o
+segredo de novo.</p>
+<p><code>update</code> muda só o que você passa. <code>--event</code> e <code>--project</code> substituem a lista
+inteira; <code>--all-projects</code> volta a receber os eventos de todos os projetos e
+não pode ser usado junto com <code>--project</code>. <code>pause</code> para os envios, e o que
+acontecer enquanto o webhook está pausado não é enviado depois do <code>resume</code>.
+Um webhook com cinco entregas seguidas que falharam até a última tentativa é
+pausado sozinho, os gestores recebem um e-mail, e <code>get</code> mostra o motivo em
+<code>paused_reason</code> (<code>consecutive_failures</code>). <code>test</code> envia uma mensagem <code>ping</code>,
+mesmo com o webhook pausado. <code>delete</code> exclui o webhook na hora, sem pedir confirmação.</p>
+<h4 id="entregas">Entregas<a class="headerlink" href="#entregas" title="Permanent link">&para;</a></h4>
+<div class="codehilite"><pre><span></span><code>tn<span class="w"> </span>webhooks<span class="w"> </span>deliveries<span class="w"> </span>&lt;id&gt;<span class="w"> </span>--status<span class="w"> </span>failed
+tn<span class="w"> </span>webhooks<span class="w"> </span>delivery<span class="w"> </span>&lt;id&gt;<span class="w"> </span>&lt;id-da-entrega&gt;
+tn<span class="w"> </span>webhooks<span class="w"> </span>redeliver<span class="w"> </span>&lt;id&gt;<span class="w"> </span>&lt;id-da-entrega&gt;
+</code></pre></div>
+<p><code>deliveries</code> lista as entregas do webhook, da mais recente para a mais
+antiga, com tipo, status, data, número de tentativas e o código HTTP da última
+tentativa. <code>--status</code> filtra por <code>pending</code> (ainda tentando), <code>succeeded</code> ou
+<code>failed</code> (esgotou as tentativas). As entregas ficam guardadas por 30 dias.
+<code>delivery</code> mostra uma entrega com todas as tentativas, o início da última
+resposta do seu sistema e a mensagem enviada. <code>redeliver</code> envia a mesma
+mensagem de novo, como uma nova entrega com o mesmo <code>webhook-id</code>, e imprime o
+id e o status dela.</p>
+<h4 id="trocar-o-segredo">Trocar o segredo<a class="headerlink" href="#trocar-o-segredo" title="Permanent link">&para;</a></h4>
+<div class="codehilite"><pre><span></span><code>tn<span class="w"> </span>webhooks<span class="w"> </span>rotate-secret<span class="w"> </span>&lt;id&gt;
+</code></pre></div>
+<p><code>rotate-secret</code> gera um segredo novo e o imprime uma única vez, como
+<code>create</code>. Nas 24 horas seguintes, cada entrega é assinada com o segredo novo e
+com o anterior, então dá tempo de trocar o segredo no sistema de destino sem
+perder mensagens. Depois disso, só o novo vale.</p>
 <h2 id="relacionado">Relacionado<a class="headerlink" href="#relacionado" title="Permanent link">&para;</a></h2>
 <ul>
 <li><a href="../api/">API e SDK</a>: a API por trás do <code>tn</code> e o SDK Python.</li>
+<li><a href="../webhooks/">Webhooks</a>: o formato das mensagens e a verificação da assinatura.</li>
 <li><a href="../../organizacao/chaves-e-dispositivos/">Chaves de API e dispositivos</a>: chaves de API para scripts.</li>
 <li><a href="../../organizacao/membros/">Membros e convites</a>: as regras de membros e convites.</li>
 <li><a href="../../catalogos/importar-dados/">Importar dados</a>: formatos aceitos e erros de processamento.</li>
@@ -1781,6 +1871,12 @@ com código 1 se alguma não foi decidida.</p>
                             
                         </a>
                         
+                        <a class="text-2xl font-medium" href="../webhooks/">
+                            
+                            Webhooks
+                            
+                        </a>
+                        
                     </div>
                     
                 </div>
@@ -1881,6 +1977,10 @@ com código 1 se alguma não foi decidida.</p>
         
         <a href="#coletas-e-revisao" data-active="false" data-depth="3">
             Coletas e revisão
+        </a>
+        
+        <a href="#webhooks" data-active="false" data-depth="3">
+            Webhooks
         </a>
         
         
