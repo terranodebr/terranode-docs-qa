@@ -1181,9 +1181,11 @@ dele. Como vincular e remover formulários de um projeto está em
 <a href="../projetos/camadas-e-formularios/">Camadas e formulários do projeto</a>.</p>
 <h2 id="excluir-um-formulario">Excluir um formulário<a class="headerlink" href="#excluir-um-formulario" title="Permanent link">&para;</a></h2>
 <p>Não há exclusão de formulários no web app. Hoje a exclusão existe só pela
-API (<code>DELETE /api/v1/surveys/{ref}</code>), sem confirmação e sem verificar
-coletas ou projetos; veja <a href="../desenvolvedores/api/">API e SDK</a>. O registro
-é arquivado, não apagado, mas não há como restaurá-lo pela interface.</p>
+API (<code>DELETE /api/v1/surveys/{ref}</code>), sem confirmação; veja
+<a href="../desenvolvedores/api/">API e SDK</a>. A API recusa com <code>409</code> o formulário
+que tem coletas, mesmo que elas tenham sido excluídas, mas não verifica
+projetos. O registro é arquivado, não apagado, mas não há como restaurá-lo
+pela interface.</p>
 <div class="admonition note">
 <p class="admonition-title">Formulário no formato antigo</p>
 <p>Um formulário criado antes do formato atual abre com o aviso
