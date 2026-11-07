@@ -1113,9 +1113,11 @@ nova; para voltar à antiga, peça o convite.</p>
 <h2 id="mais-de-uma-organizacao">Mais de uma organização<a class="headerlink" href="#mais-de-uma-organizacao" title="Permanent link">&para;</a></h2>
 <p>Uma conta pode ser membro de várias organizações, cada uma com o seu papel.</p>
 <ul>
-<li><strong>Web app</strong>: não há troca de organização. O web app mostra sempre uma só, a
-  que você entrou mais recentemente. Para trabalhar em outra, use a linha de
-  comando.</li>
+<li><strong>Web app</strong>: não há seletor nem uma organização ativa escolhida pelo usuário.
+  O web app usa a participação ativa mais recente retornada pela conta. Todas
+  as abas usam essa mesma organização; não é possível manter organizações
+  diferentes em abas diferentes. Para trabalhar em outra, use a linha de
+  comando ou a API.</li>
 <li><strong>Linha de comando</strong>: <code>tn auth login</code> escolhe a organização sozinho quando
   você tem uma só. Com mais de uma, ele lista todas e pede
   <code>tn config set-org &lt;organização&gt;</code>.</li>

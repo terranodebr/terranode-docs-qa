@@ -1027,6 +1027,12 @@ está autenticado. A matriz completa está em
 <td>gestor ou revisor do projeto</td>
 </tr>
 <tr>
+<td><code>projects exports create</code>, <code>list</code>, <code>download</code></td>
+<td>sim</td>
+<td>sim</td>
+<td>se gerencia o projeto</td>
+</tr>
+<tr>
 <td><code>webhooks list</code>, <code>get</code>, <code>event-types</code>, <code>deliveries</code>, <code>delivery</code></td>
 <td>sim</td>
 <td>não</td>
@@ -1203,7 +1209,10 @@ tn projects events    list &lt;projeto&gt; [filtros] | summary &lt;projeto&gt; [
 tn projects responses list &lt;projeto&gt; [--state] [--q] [--collector] [--survey]
                       | summary &lt;projeto&gt; [--q] [--collector] [--survey]
                       | get &lt;projeto&gt; &lt;coleta&gt;
-                      | review &lt;projeto&gt; COLETA... (--approve | --reject | --reopen) [--comment]
+                       | review &lt;projeto&gt; COLETA... (--approve | --reject | --reopen) [--comment]
+tn projects exports   create &lt;projeto&gt; [--wait] [-o &lt;arquivo.zip&gt;] [--force]
+                      | list &lt;projeto&gt;
+                      | download &lt;projeto&gt; &lt;id-da-exportação&gt; -o &lt;arquivo.zip&gt; [--force]
 tn webhooks     list | get &lt;id&gt; | event-types
                 | create --url &lt;url&gt; --event &lt;tipo&gt;... [--description] [--project &lt;projeto&gt;]...
                 | update &lt;id&gt; [--url] [--description] [--event &lt;tipo&gt;]...
@@ -1492,6 +1501,18 @@ imprime uma linha por coleta, com um destes resultados:</p>
 </table></div>
 <p>As outras coletas são decididas mesmo quando uma falha, mas o comando termina
 com código 1 se alguma não foi decidida.</p>
+<h3 id="exportacoes-do-projeto">Exportações do projeto<a class="headerlink" href="#exportacoes-do-projeto" title="Permanent link">&para;</a></h3>
+<div class="codehilite"><pre><span></span><code>tn<span class="w"> </span>projects<span class="w"> </span>exports<span class="w"> </span>create<span class="w"> </span>obra-br101<span class="w"> </span>--wait<span class="w"> </span>-o<span class="w"> </span>obra-br101.zip
+tn<span class="w"> </span>projects<span class="w"> </span>exports<span class="w"> </span>list<span class="w"> </span>obra-br101
+tn<span class="w"> </span>projects<span class="w"> </span>exports<span class="w"> </span>download<span class="w"> </span>obra-br101<span class="w"> </span>&lt;id&gt;<span class="w"> </span>-o<span class="w"> </span>obra-br101.zip
+</code></pre></div>
+<p><code>create</code> solicita o mesmo pacote de <strong>Exportar dados</strong> no web app. Ele contém
+um GeoPackage com respostas, trajetos e limite do projeto, além das mídias
+verificadas. Com <code>--wait</code>, o comando acompanha a geração e pode baixar o
+resultado com <code>-o</code>. Um projeto em rascunho é recusado.</p>
+<p>Uma exportação pronta expira depois de 7 dias. <code>download</code> obtém um link de
+curta duração e grava o ZIP no caminho de <code>-o</code>; nenhum dos dois comandos
+sobrescreve um arquivo existente sem <code>--force</code>.</p>
 <h3 id="webhooks">Webhooks<a class="headerlink" href="#webhooks" title="Permanent link">&para;</a></h3>
 <p>Um webhook avisa outro sistema (um ERP, um painel, uma automação) do que
 acontece nos projetos e nos lotes sincronizados pelos dispositivos: o
@@ -1977,6 +1998,10 @@ perder mensagens. Depois disso, só o novo vale.</p>
         
         <a href="#coletas-e-revisao" data-active="false" data-depth="3">
             Coletas e revisão
+        </a>
+        
+        <a href="#exportacoes-do-projeto" data-active="false" data-depth="3">
+            Exportações do projeto
         </a>
         
         <a href="#webhooks" data-active="false" data-depth="3">

@@ -953,10 +953,10 @@
 esperar o fim do trabalho: quanto já foi coletado, quem está em campo agora,
 por onde cada pessoa passou e o que mudou no projeto. Esse mesmo registro fica
 guardado e serve depois para saber o que foi feito, quando e por quem.</p>
-<p>A página do projeto mostra o que está acontecendo em campo em três lugares:
-a aba <strong>Visão Geral</strong> (cartões e mapa), as camadas de campo nos mapas do
-projeto e a aba <strong>Atividade</strong> (o registro de tudo o que aconteceu). Esta
-página explica o que cada um mostra e como os números são calculados. Como
+<p>A página do projeto mostra o que está acontecendo em campo na aba <strong>Visão
+Geral</strong> (cartões e mapa), nas camadas de campo, na aba <strong>Coletas</strong> e na aba
+<strong>Atividade</strong> (o registro de tudo o que aconteceu). Esta página explica o que
+cada um mostra e como os números são calculados. Como
 os dados saem do app e chegam ao servidor está em
 <a href="../../dados-de-campo/">Coletas, mídias e sincronização</a>.</p>
 <h2 id="quem-ve-o-que">Quem vê o quê<a class="headerlink" href="#quem-ve-o-que" title="Permanent link">&para;</a></h2>
@@ -988,6 +988,18 @@ os dados saem do app e chegam ao servidor está em
 <td>Eventos de gestão e só os próprios eventos de campo</td>
 <td>Coletores da organização que não gerenciam o projeto</td>
 </tr>
+<tr>
+<td>Listar e abrir coletas</td>
+<td>Todos os membros da organização</td>
+</tr>
+<tr>
+<td>Aprovar, rejeitar ou reabrir coletas</td>
+<td>Gestores e revisores do projeto com permissão de revisão; ninguém revisa a própria coleta</td>
+</tr>
+<tr>
+<td>Exportar os dados do projeto</td>
+<td>Gestores e editores da organização, ou quem gerencia o projeto</td>
+</tr>
 </tbody>
 </table></div>
 <p>Os papéis estão em <a href="../../organizacao/papeis-e-permissoes/">Papéis e permissões</a>
@@ -996,8 +1008,9 @@ e <a href="../equipe/">Equipe do projeto</a>.</p>
 <p>A aba <strong>Visão Geral</strong> mostra o mapa do projeto com um painel de cartões ao
 lado. Os cartões se atualizam sozinhos quando chega algo do campo ou uma
 decisão de revisão. Todos os números são calculados na hora a partir das coletas
-recebidas; nada fica guardado em cache. O botão <strong>Exportar dados</strong> do
-cabeçalho ainda não faz nada.</p>
+recebidas; nada fica guardado em cache. O botão <strong>Exportar dados</strong> solicita um
+pacote e abre a aba <strong>Exportações</strong>, onde você acompanha a geração e faz o
+download.</p>
 <h3 id="o-que-conta-como-coleta">O que conta como coleta<a class="headerlink" href="#o-que-conta-como-coleta" title="Permanent link">&para;</a></h3>
 <p>Uma coleta é uma resposta de formulário recebida em uma sessão de campo do
 projeto, com ou sem geometria. Ela é contada no dia em que a coleta começou
@@ -1135,9 +1148,21 @@ campo e se atualizam a cada 2 minutos:</p>
 </tr>
 </tbody>
 </table></div>
-<p>Essas camadas são só de leitura e não entram no pacote offline. Os arquivos
-de mídia em si (a foto, o vídeo) ainda não podem ser abertos no web app; o
-mapa mostra onde eles foram capturados e se já subiram.</p>
+<p>Essas camadas são só de leitura e não entram no pacote offline. Na aba
+<strong>Coletas</strong>, imagens verificadas podem ser abertas no tamanho original e
+áudios e vídeos podem ser reproduzidos. Uma mídia que ainda não chegou aparece
+como aguardando envio.</p>
+<h2 id="coletas-e-revisao">Coletas e revisão<a class="headerlink" href="#coletas-e-revisao" title="Permanent link">&para;</a></h2>
+<p>A aba <strong>Coletas</strong> lista as respostas da mais recente para a mais antiga. Você
+pode buscar pelo número ou coletor e filtrar por estado, formulário e pessoa.
+Ao abrir uma coleta, a página mostra as respostas, as mídias verificadas, as
+versões recebidas e o histórico de revisão.</p>
+<p>Quando <strong>Exigir revisão dos pontos</strong> está ligado, novas coletas ficam
+<strong>Aguardando revisão</strong>. Quem pode revisar aprova, rejeita com um comentário ou
+reabre uma coleta já decidida. É possível decidir várias coletas de uma vez.
+Se outra pessoa ou uma nova versão alterar a coleta durante a decisão, o web
+app recarrega o estado atual em vez de sobrescrever a mudança. Ninguém pode
+revisar a própria coleta.</p>
 <h2 id="atividade">Atividade<a class="headerlink" href="#atividade" title="Permanent link">&para;</a></h2>
 <p>A aba <strong>Atividade</strong> é o registro do projeto. O cabeçalho mostra "N eventos
 nos últimos 30 dias" e o fuso horário; os eventos vêm agrupados por dia
@@ -1182,17 +1207,18 @@ com o nome atual.</p>
 <p><strong>Exportar CSV</strong> baixa os eventos que passam pelos filtros atuais, no arquivo
 <code>atividade-&lt;slug&gt;-&lt;data&gt;.csv</code>. O CSV abre direto no Excel e no LibreOffice
 (UTF-8 com BOM) e tem as colunas <code>data_hora</code> (em UTC), <code>tipo</code>, <code>evento</code>,
-<code>detalhe</code>, <code>pessoa</code>, <code>latitude</code>, <code>longitude</code> e <code>dispositivo</code>. É a única
-exportação do projeto hoje: ela exporta eventos, não as respostas dos
-formulários.</p>
+<code>detalhe</code>, <code>pessoa</code>, <code>latitude</code>, <code>longitude</code> e <code>dispositivo</code>. Ele exporta
+eventos, não as respostas dos formulários.</p>
 <!-- screenshot: a aba Atividade com o filtro Tipo de evento aberto e o painel Resumo da atividade à direita -->
 
-<div class="admonition note">
-<p class="admonition-title">O que ainda não existe no web app</p>
-<p>Não há lista nem página de cada coleta, nem exportação das respostas ou
-das mídias; o que chegou do campo é visto pelos mapas, pelos cartões e
-pela aba <strong>Atividade</strong> descritos aqui.</p>
-</div>
+<h2 id="exportacoes">Exportações<a class="headerlink" href="#exportacoes" title="Permanent link">&para;</a></h2>
+<p><strong>Exportar dados</strong> gera um arquivo ZIP com um GeoPackage e as mídias
+verificadas do projeto. O GeoPackage contém uma camada por formulário, além de
+mídias geolocalizadas, trajetos, pontos dos trajetos e o limite do projeto. A
+aba <strong>Exportações</strong> mostra os pacotes em geração e os que estão prontos.</p>
+<p>Um pacote pronto pode ser baixado por 7 dias. Se os dados não mudaram, um novo
+pedido reutiliza a exportação que já está na fila ou pronta. Projetos em
+rascunho não podem ser exportados.</p>
 <h2 id="relacionado">Relacionado<a class="headerlink" href="#relacionado" title="Permanent link">&para;</a></h2>
 <ul>
 <li><a href="../../dados-de-campo/">Coletas, mídias e sincronização</a>: como os dados saem do aparelho e chegam ao servidor.</li>
@@ -1584,6 +1610,12 @@ pela aba <strong>Atividade</strong> descritos aqui.</p>
         
 
         
+        <a href="#coletas-e-revisao" data-active="false" data-depth="2">
+            Coletas e revisão
+        </a>
+        
+
+        
         <a href="#atividade" data-active="false" data-depth="2">
             Atividade
         </a>
@@ -1593,6 +1625,12 @@ pela aba <strong>Atividade</strong> descritos aqui.</p>
             Exportar CSV
         </a>
         
+        
+
+        
+        <a href="#exportacoes" data-active="false" data-depth="2">
+            Exportações
+        </a>
         
 
         

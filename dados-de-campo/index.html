@@ -976,6 +976,14 @@ você quer saber o que o coletor vê no celular, veja
 <td>Todos que veem o projeto</td>
 </tr>
 <tr>
+<td>Abrir coletas, respostas e mídias verificadas</td>
+<td>Todos que veem o projeto</td>
+</tr>
+<tr>
+<td>Revisar coletas quando o projeto exige revisão</td>
+<td>Gestores e revisores do projeto com permissão de revisão; ninguém revisa a própria coleta</td>
+</tr>
+<tr>
 <td>Ver trajetos e posições de toda a equipe</td>
 <td>Gestores (<code>owner</code>), editores (<code>editor</code>) e quem edita o projeto; coletores (<code>field</code>) veem só os próprios</td>
 </tr>
@@ -1123,13 +1131,10 @@ aguardando envio)".</p>
 <p>As fotos chegam na resolução original da câmera, sem compressão. Vídeos vêm em
 720p por padrão e áudios em <code>audio/mp4</code>; os limites de duração são definidos
 no campo do formulário (veja <a href="../formularios/tipos-de-campo/">Tipos de campo</a>).</p>
-<div class="admonition warning">
-<p class="admonition-title">O web app ainda não mostra as mídias</p>
-<p>Hoje o web app exibe apenas a posição das mídias com geotag (camada
-<strong>Fotos e mídias</strong>) e as contagens no inspetor da coleta. Não há como
-abrir, visualizar ou baixar o arquivo de uma foto, vídeo ou áudio pelo
-web app ou pela API.</p>
-</div>
+<p>Na aba <strong>Coletas</strong>, imagens verificadas podem ser abertas no tamanho original
+e áudios e vídeos podem ser reproduzidos. Os links de mídia retornados pela
+API têm validade curta. Mídias verificadas também entram na exportação completa
+do projeto; as que ainda aguardam envio não entram.</p>
 <p>A chegada de cada mídia verificada gera um evento em <strong>Atividade</strong>: <strong>Foto
 adicionada</strong>, <strong>Vídeo adicionado</strong>, <strong>Áudio adicionado</strong> ou <strong>Assinatura
 adicionada</strong>.</p>
@@ -1184,11 +1189,19 @@ de campo:</p>
 <td>Histórico de coletas, edições, exclusões, mídias e lotes, com exportação em CSV</td>
 <td>Aba <strong>Atividade</strong></td>
 </tr>
+<tr>
+<td>Lista, respostas, mídias e histórico de revisão de cada coleta</td>
+<td>Aba <strong>Coletas</strong></td>
+</tr>
+<tr>
+<td>Respostas, trajetos, limite e mídias em um pacote</td>
+<td><strong>Exportar dados</strong> e aba <strong>Exportações</strong></td>
+</tr>
 </tbody>
 </table></div>
-<p>Os detalhes de cada cartão e filtro estão em <a href="../projetos/acompanhamento/">Acompanhar o
-projeto</a>. Não existe ainda uma lista de coletas
-nem exportação das respostas em CSV ou GeoJSON.</p>
+<p>Os detalhes de cada cartão, filtro, revisão e exportação estão em <a href="../projetos/acompanhamento/">Acompanhar o
+projeto</a>. A exportação completa usa ZIP com
+GeoPackage e mídias; não há exportação direta das respostas em CSV ou GeoJSON.</p>
 <h2 id="relacionado">Relacionado<a class="headerlink" href="#relacionado" title="Permanent link">&para;</a></h2>
 <ul>
 <li><a href="../app/coleta/">Coletar no campo</a>: a sessão de campo e a coleta no aplicativo.</li>

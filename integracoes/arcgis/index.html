@@ -1069,11 +1069,15 @@ camada inteira de novo e atualiza a fonte no lugar.</p>
 <p>Uma camada vazia vira uma fonte com as colunas certas e nenhuma feição.
 Anexos das feições não são trazidos.</p>
 <h3 id="estilo-gerado">Estilo gerado<a class="headerlink" href="#estilo-gerado" title="Permanent link">&para;</a></h3>
-<p>Na primeira sincronização de uma camada vetorial, o terranode traduz o
-desenho definido no ArcGIS para um estilo do terranode, com o slug
-<code>esri-</code> seguido do slug da fonte, e o aplica à fonte se ela ainda não tiver
-estilo. O que não tem equivalente no terranode fica de fora, sem aviso na
-interface. Você pode editar esse estilo ou trocá-lo como qualquer outro; veja
+<p>Em cada sincronização efetiva de uma camada vetorial, o terranode traduz o
+desenho definido no ArcGIS e mantém um estilo com o slug <code>esri-</code> seguido do
+slug da fonte. A primeira sincronização cria e aplica esse estilo se a fonte
+estiver sem estilo; as seguintes atualizam o mesmo estilo.</p>
+<p>Uma alteração salva diretamente no estilo <code>esri-*</code> é substituída na próxima
+sincronização. Para preservar uma personalização, salve-a como um novo estilo
+e aplique esse novo estilo à fonte. A fonte continua usando o estilo
+personalizado enquanto o <code>esri-*</code> é atualizado em segundo plano. O que não tem
+equivalente no terranode fica de fora; veja
 <a href="../../catalogos/estilos/">Estilos e legenda</a>.</p>
 <h2 id="imagens-servicos-de-imagem-e-arquivos-raster">Imagens: serviços de imagem e arquivos raster<a class="headerlink" href="#imagens-servicos-de-imagem-e-arquivos-raster" title="Permanent link">&para;</a></h2>
 <p>Um <strong>Serviço de imagem</strong> ou um <strong>Arquivo raster</strong> (item do tipo imagem cujo
