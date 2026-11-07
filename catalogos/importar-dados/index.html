@@ -1038,7 +1038,7 @@ aparece no mapa.</p>
 <tbody>
 <tr>
 <td>Tamanho por arquivo</td>
-<td>Até 2 GB, como indica o diálogo de envio</td>
+<td>Até 2 GB</td>
 </tr>
 <tr>
 <td>Itens por envio (camadas e rasters contados em todos os arquivos selecionados)</td>
@@ -1050,10 +1050,13 @@ aparece no mapa.</p>
 </tr>
 </tbody>
 </table></div>
-<p>O diálogo conta os itens antes de enviar (entradas do zip, tabelas do
-GeoPackage) e recusa a seleção se passar do limite. Uma planilha conta como um
-item no diálogo, mas cada aba vira um item no processamento. Para enviar mais,
-divida em vários envios.</p>
+<p>O diálogo deixa de fora um arquivo maior que o limite e conta os itens antes de
+enviar (entradas do zip, tabelas do GeoPackage, abas de um <code>.xlsx</code>), recusando a
+seleção se passar do limite. Cada aba de uma planilha é um item, mesmo vazia.</p>
+<p>O web app, a CLI e a API obedecem aos mesmos limites por arquivo: um arquivo
+maior que 2 GB, ou com mais de 128 itens, é recusado. Um <code>.ods</code> ou uma planilha
+dentro de um zip só têm as abas contadas depois do envio, e nesse caso o envio
+falha sem importar nada. Para enviar mais, divida em vários envios.</p>
 <h2 id="enviar-pelo-web-app">Enviar pelo web app<a class="headerlink" href="#enviar-pelo-web-app" title="Permanent link">&para;</a></h2>
 <ol>
 <li>Abra o catálogo e escolha <strong>Enviar dados</strong>.</li>
