@@ -1149,7 +1149,8 @@ explicitamente, passe um <code>TerranodeConfig</code>:</p>
 <li>Os métodos de listagem (<code>list_catalogs</code>, <code>list_data_sources</code>,
   <code>list_uploads</code>, <code>list_members</code>, <code>list_invitations</code>) devolvem iteradores que
   percorrem todas as páginas sozinhos.</li>
-<li><code>create_upload</code> cria o envio e manda o arquivo; <code>wait_for_upload</code> consulta
+<li><code>create_upload</code> cria o envio e manda o arquivo. Se o envio falhar, ele tenta
+  excluir o registro e lança o erro original; <code>wait_for_upload</code> consulta
   o status a cada 2 segundos por até 5 minutos e lança <code>TimeoutError</code> se o
   processamento não terminar nesse prazo.</li>
 <li>Respostas de erro viram exceções tipadas: <code>AuthenticationError</code> (401),
