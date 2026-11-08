@@ -1156,6 +1156,83 @@ antes de desenhá-la; o porquê está em
 <strong>Valor exato</strong>: o filtro é só de igualdade, sem "contém" ou intervalos. O
 contador mostra quantas feições combinam. Rasters não têm tabela e exibem
 <strong>Atributos indisponíveis</strong>.</p>
+<h3 id="selecionar-feicoes">Selecionar feições<a class="headerlink" href="#selecionar-feicoes" title="Permanent link">&para;</a></h3>
+<p>A seleção é uma só na página da fonte: o que você seleciona na tabela aparece
+no mapa e vice-versa, tanto no trecho da <strong>Visão geral</strong> quanto na aba
+<strong>Tabela de atributos</strong>. As feições selecionadas ganham um contorno azul-claro.</p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+<th>Onde</th>
+<th>Gesto</th>
+<th>O que faz</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Tabela</td>
+<td>Clique</td>
+<td>Seleciona a linha</td>
+</tr>
+<tr>
+<td>Tabela</td>
+<td>Ctrl+clique (⌘ no Mac)</td>
+<td>Põe ou tira a linha da seleção</td>
+</tr>
+<tr>
+<td>Tabela</td>
+<td>Shift+clique</td>
+<td>Seleciona do último clique até a linha, na página atual</td>
+</tr>
+<tr>
+<td>Tabela</td>
+<td>Duplo clique</td>
+<td>Seleciona a linha e aproxima o mapa da feição</td>
+</tr>
+<tr>
+<td>Mapa</td>
+<td>Clique</td>
+<td>Seleciona a feição e abre a tabela sob o mapa</td>
+</tr>
+<tr>
+<td>Mapa</td>
+<td>Ctrl+clique (⌘ no Mac)</td>
+<td>Põe ou tira a feição da seleção</td>
+</tr>
+<tr>
+<td>Mapa</td>
+<td>Shift+arrastar</td>
+<td>Seleciona as feições dentro da caixa; com Ctrl (⌘), soma à seleção</td>
+</tr>
+<tr>
+<td>Mapa</td>
+<td>Clique fora das feições</td>
+<td>Limpa a seleção</td>
+</tr>
+</tbody>
+</table></div>
+<p>A seleção vai até 1.000 feições. Uma caixa que passaria desse limite é
+recusada inteira, nunca cortada: a mensagem diz quantas feições ela tem, e
+basta aproximar o mapa e tentar de novo.</p>
+<p>As três feições selecionadas por último ficam fixas no topo da tabela. Com
+mais de três, a linha <strong>+ N selecionadas</strong> leva a <strong>Ver todas</strong>, que é o mesmo
+que escolher <strong>Selecionadas</strong> em vez de <strong>Todas</strong> acima da tabela.</p>
+<p>Clique com o botão direito em uma linha ou feição do mapa (ou use Shift+F10,
+a tecla de menu, ou pressione e segure no celular) para agir sobre a seleção.
+Se a linha não estiver selecionada, ela passa a ser a seleção.</p>
+<ul>
+<li><strong>Zoom para a seleção</strong> aproxima o mapa da Visão geral das feições.</li>
+<li><strong>Criar projeto pela seleção</strong> abre o assistente Novo projeto com a área de
+  cobertura já preenchida; veja
+  <a href="../projetos/#passo-2-area-de-cobertura">Criar um projeto</a>. Só
+  aparece para quem pode criar projetos.</li>
+<li><strong>Copiar atributos</strong> copia uma tabela separada por tabulação, que cola
+  direto em uma planilha.</li>
+<li><strong>Copiar como GeoJSON</strong> copia as feições com geometria.</li>
+<li><strong>Limpar seleção</strong>.</li>
+</ul>
+<p>Em fontes sem geometria a seleção e <strong>Copiar atributos</strong> funcionam; as ações
+de mapa ficam desabilitadas.</p>
 <p>Em <strong>Metadados</strong>, a visão <strong>Campos</strong> traz <strong>Campo</strong>, <strong>Tipo</strong> e <strong>Largura</strong>
 quando o esquema veio do arquivo, ou <strong>Campo</strong>, <strong>Tipo</strong> e <strong>Uso em estilos</strong>
 (<strong>Numérico</strong>, <strong>Categórico</strong> ou <strong>Não classificável</strong>) quando foi lido da
@@ -1594,6 +1671,10 @@ Pela linha de comando: <code>tn datasources delete &lt;catálogo&gt; &lt;fonte&g
         
         <a href="#a-pagina-da-fonte-de-dados" data-active="false" data-depth="3">
             A página da fonte de dados
+        </a>
+        
+        <a href="#selecionar-feicoes" data-active="false" data-depth="3">
+            Selecionar feições
         </a>
         
         <a href="#renomear" data-active="false" data-depth="3">
