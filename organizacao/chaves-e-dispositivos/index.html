@@ -971,9 +971,10 @@ instalações do aplicativo estão enviando dados e permite desligar um aparelho
 perdido sem tirar o acesso da pessoa.</p>
 <p>Além das pessoas, duas outras coisas acessam a sua organização: <strong>chaves de
 API</strong>, usadas por scripts e integrações, e <strong>dispositivos registrados</strong>, as
-instalações do app de campo. As duas são administradas só por Gestores e só
-pela linha de comando <code>tn</code> ou pela API. As abas <strong>API</strong> e <strong>Dispositivos</strong>
-existem em <strong>Configurações</strong>, mas ainda não oferecem essas operações.</p>
+instalações do app de campo. As duas são administradas só por Gestores. Os
+dispositivos ficam na aba <strong>Dispositivos</strong> de <strong>Configurações</strong>, e também na
+linha de comando <code>tn</code> e na API. As chaves de API são administradas só pelo
+<code>tn</code> ou pela API: a aba <strong>API</strong> ainda não oferece essas operações.</p>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -992,6 +993,12 @@ existem em <strong>Configurações</strong>, mas ainda não oferecem essas opera
 </tr>
 <tr>
 <td>Listar e revogar dispositivos</td>
+<td style="text-align: center;">Sim</td>
+<td style="text-align: center;">Não</td>
+<td style="text-align: center;">Não</td>
+</tr>
+<tr>
+<td>Apagar remotamente os dados de um aparelho</td>
 <td style="text-align: center;">Sim</td>
 <td style="text-align: center;">Não</td>
 <td style="text-align: center;">Não</td>
@@ -1130,6 +1137,58 @@ tirar o acesso de uma pessoa por completo, remova-a da organização; veja
 e do CLI dessa pessoa são encerradas, e os aparelhos precisam entrar de
 novo. Veja <a href="../conta/">Sua conta</a>.</p>
 </div>
+<h3 id="a-aba-dispositivos">A aba Dispositivos<a class="headerlink" href="#a-aba-dispositivos" title="Permanent link">&para;</a></h3>
+<p>Em <strong>Configurações</strong>, a aba <strong>Dispositivos</strong> tem uma linha por aparelho, mesmo
+quando várias pessoas entraram nele. Cada linha mostra quem usa o aparelho, os
+projetos que ele baixou por último, a situação e a última atividade.</p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+<th>Situação</th>
+<th>O que significa</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Ativo</td>
+<td>Alguém está conectado no aparelho.</td>
+</tr>
+<tr>
+<td>Revogado</td>
+<td>As sessões foram encerradas. Os dados continuam no aparelho.</td>
+</tr>
+<tr>
+<td>Apagamento pendente</td>
+<td>O apagamento foi pedido e o aparelho ainda não o confirmou.</td>
+</tr>
+<tr>
+<td>Dados apagados</td>
+<td>O aparelho confirmou que apagou os dados.</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Revogar</strong> desconecta todas as pessoas da organização que entraram no
+aparelho. Os dados ficam nele, e qualquer uma delas pode entrar de novo.</p>
+<h3 id="apagar-os-dados-de-um-aparelho">Apagar os dados de um aparelho<a class="headerlink" href="#apagar-os-dados-de-um-aparelho" title="Permanent link">&para;</a></h3>
+<p><strong>Apagar dados</strong> é para um aparelho que não deve mais guardar dados da
+organização, como um celular roubado. A ação pede que você digite o nome do
+aparelho e não pode ser desfeita depois que ele a cumprir.</p>
+<ul>
+<li>O aparelho é desconectado na hora. O app apaga os dados quando abrir com
+  internet, sem que ninguém precise entrar.</li>
+<li>Saem do aparelho os dados das pessoas da sua organização, <strong>inclusive as
+  coletas que ainda não foram enviadas</strong>. Elas não podem ser recuperadas.</li>
+<li>Pessoas de outras organizações que usam o mesmo aparelho não são afetadas.</li>
+<li>Enquanto a situação for <strong>Apagamento pendente</strong>, <strong>Cancelar apagamento</strong> impede
+  a ação, se o app ainda não a tiver recebido.</li>
+</ul>
+<p>Depois do apagamento, o aparelho fica bloqueado de novos registros na
+organização, e só o suporte do terranode consegue liberá-lo. Em aparelhos que o
+app não conseguiu identificar, o bloqueio vale só para aquela instalação:
+reinstalar o app gera um novo registro. A confirmação avisa em qual caso o
+aparelho está.</p>
+<p>Revogar e apagar dependem do plano da organização. Quando o plano não inclui
+a ação, ela aparece desabilitada e explica o motivo.</p>
 <h2 id="relacionado">Relacionado<a class="headerlink" href="#relacionado" title="Permanent link">&para;</a></h2>
 <ul>
 <li><a href="../../desenvolvedores/cli/">Linha de comando tn</a>: instalar e configurar o <code>tn</code>.</li>
@@ -1522,6 +1581,14 @@ novo. Veja <a href="../conta/">Sua conta</a>.</p>
         
         <a href="#revogar" data-active="false" data-depth="3">
             Revogar
+        </a>
+        
+        <a href="#a-aba-dispositivos" data-active="false" data-depth="3">
+            A aba Dispositivos
+        </a>
+        
+        <a href="#apagar-os-dados-de-um-aparelho" data-active="false" data-depth="3">
+            Apagar os dados de um aparelho
         </a>
         
         
