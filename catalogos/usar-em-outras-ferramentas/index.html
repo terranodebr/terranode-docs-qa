@@ -972,9 +972,9 @@ mapas do próprio web app.</p>
 <p>Os dados de um catálogo não ficam presos ao terranode. Toda fonte de dados
 vetorial pode ser lida por QGIS, ArcGIS Pro, FME, GDAL e qualquer cliente que
 fale OGC API Features, um padrão aberto de leitura de feições.</p>
-<p>Qualquer pessoa com um token válido da organização (o token de login do <code>tn</code>
-ou uma chave de API) consegue ler os dados pela OGC API. Como obter e guardar
-tokens está em <a href="../../organizacao/chaves-e-dispositivos/">Chaves de API e dispositivos</a>
+<p>Qualquer pessoa com uma chave de API válida da organização consegue ler os
+dados pela OGC API. Como obter e guardar
+chaves está em <a href="../../organizacao/chaves-e-dispositivos/">Chaves de API e dispositivos</a>
 e em <a href="../../desenvolvedores/api/">API e SDK</a>.</p>
 <h2 id="ogc-api-features">OGC API Features<a class="headerlink" href="#ogc-api-features" title="Permanent link">&para;</a></h2>
 <p>Cada catálogo da sua organização, e cada catálogo público da terranode, tem o
@@ -1037,9 +1037,8 @@ em <code>https://&lt;api&gt;/api/v1/ogc/openapi.json</code>; os dois também ped
 <div class="codehilite"><pre><span></span><code>curl<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;Authorization: Bearer &lt;token&gt;&quot;</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span><span class="s2">&quot;https://&lt;api&gt;/api/v1/ogc/minha-org/catalogs/meu-catalogo/collections&quot;</span>
 </code></pre></div>
-<p>A organização vem da URL, então não é preciso nenhum outro cabeçalho. Para
-scripts e integrações use uma chave de API; para uso pessoal o token do
-<code>tn auth login</code> também serve, mas expira em 30 dias.</p>
+<p>A organização vem da URL, então não é preciso nenhum outro cabeçalho. Use uma
+chave de API da organização.</p>
 <h3 id="paginacao-e-filtros">Paginação e filtros<a class="headerlink" href="#paginacao-e-filtros" title="Permanent link">&para;</a></h3>
 <div class="table-wrapper"><table>
 <thead>

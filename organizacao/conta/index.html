@@ -964,8 +964,8 @@
   </div>
   <div class="typography w-full flex-1 *:data-[slot=alert]:first:mt-0">
     <h1 id="sua-conta">Sua conta<a class="headerlink" href="#sua-conta" title="Permanent link">&para;</a></h1>
-<p>Você usa uma única conta para tudo no terranode: o web app, o aplicativo de
-campo e a linha de comando. Quem decide quem entra em uma organização é quem
+<p>Você usa uma única conta no web app e no aplicativo de campo; a linha de
+comando usa uma chave de API da organização. Quem decide quem entra em uma organização é quem
 a administra, por meio de convites, e cada pessoa já chega com o papel que vai
 ter. Esta página explica como a conta é criada e como entrar em cada lugar.</p>
 <p>Esta página vale para todo mundo, qualquer que seja o papel. Para convidar
@@ -1065,7 +1065,7 @@ organização até a confirmação.</p>
 <!-- screenshot: tela "Confirme seu endereço" com os botões Enviar novo link e Sair -->
 
 <h2 id="entrar">Entrar<a class="headerlink" href="#entrar" title="Permanent link">&para;</a></h2>
-<p>A mesma conta serve para as três formas de usar o terranode:</p>
+<p>A mesma conta serve para o web app e o app de campo:</p>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -1085,13 +1085,10 @@ organização até a confirmação.</p>
 <td>E-mail e senha na tela de entrada do app. O app registra o aparelho automaticamente; veja <a href="../../app/">Instalar e entrar</a>.</td>
 <td>30 dias</td>
 </tr>
-<tr>
-<td>Linha de comando</td>
-<td><code>tn auth login</code>; veja <a href="../../desenvolvedores/cli/">Linha de comando tn</a>.</td>
-<td>30 dias</td>
-</tr>
 </tbody>
 </table></div>
+<p>A linha de comando não entra com a sua conta: ela usa uma chave de API da
+organização; veja <a href="../../desenvolvedores/cli/">Linha de comando tn</a>.</p>
 <p>Se o e-mail ou a senha estiverem errados, o web app mostra "E-mail ou senha
 incorretos." e não diz qual dos dois está errado.</p>
 <p>Para sair do web app, abra o menu da sua conta no canto superior (suas
@@ -1108,11 +1105,11 @@ iniciais, nome e papel) e escolha <strong>Sair</strong>.</p>
 <p>O link vale por 3 dias e funciona uma única vez. A nova senha segue as mesmas
 regras da senha de convite.</p>
 <div class="admonition warning">
-<p class="admonition-title">Redefinir a senha encerra as sessões do CLI e do app</p>
-<p>Ao salvar a nova senha, todas as sessões abertas no app de campo e na
-linha de comando são encerradas na hora. Entre de novo em cada aparelho e
-rode <code>tn auth login</code> outra vez. O app registra o aparelho novamente ao
-entrar. As sessões abertas no navegador também são invalidadas.</p>
+<p class="admonition-title">Redefinir a senha encerra as sessões do app</p>
+<p>Ao salvar a nova senha, todas as sessões abertas no app de campo são
+encerradas na hora. Entre de novo em cada aparelho; o app registra o
+aparelho novamente ao entrar. As sessões abertas no navegador também são
+invalidadas. As chaves de API da linha de comando não mudam.</p>
 </div>
 <p>Hoje não há como trocar a senha ou o e-mail de dentro do web app. Para trocar
 a senha, use o fluxo acima mesmo sabendo a senha atual.</p>
@@ -1133,20 +1130,18 @@ nova; para voltar à antiga, peça o convite.</p>
   as abas usam essa mesma organização; não é possível manter organizações
   diferentes em abas diferentes. Para trabalhar em outra, use a linha de
   comando ou a API.</li>
-<li><strong>Linha de comando</strong>: <code>tn auth login</code> escolhe a organização sozinho quando
-  você tem uma só. Com mais de uma, ele lista todas e pede
-  <code>tn config set-org &lt;organização&gt;</code>.</li>
+<li><strong>Linha de comando</strong>: cada chave de API pertence a uma organização; para
+  trabalhar em outra, configure uma chave dela.</li>
 <li><strong>API</strong>: informe a organização no cabeçalho <code>X-Organization</code>; veja
   <a href="../../desenvolvedores/api/">API e SDK</a>.</li>
 </ul>
-<p>Para ver em quais organizações você está e o que pode fazer em cada uma, rode
-<code>tn auth whoami</code> ou consulte <a href="../papeis-e-permissoes/">Papéis e permissões</a>.</p>
+<p>O que cada papel pode fazer está em <a href="../papeis-e-permissoes/">Papéis e permissões</a>.</p>
 <h2 id="relacionado">Relacionado<a class="headerlink" href="#relacionado" title="Permanent link">&para;</a></h2>
 <ul>
 <li><a href="../membros/">Membros e convites</a>: como convidar o resto da equipe.</li>
 <li><a href="../papeis-e-permissoes/">Papéis e permissões</a>: o que o seu papel permite fazer.</li>
 <li><a href="../../app/">Instalar e entrar</a>: entrar no aplicativo de campo com a mesma conta.</li>
-<li><a href="../../desenvolvedores/cli/">Linha de comando tn</a>: entrar pela linha de comando.</li>
+<li><a href="../../desenvolvedores/cli/">Linha de comando tn</a>: configurar a chave de API da linha de comando.</li>
 <li><a href="../../conceitos/">Conceitos</a>: o que são organização, membro e papel.</li>
 </ul>
   </div>

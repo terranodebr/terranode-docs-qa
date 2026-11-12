@@ -1054,17 +1054,16 @@ Guarde-o em um lugar seguro; não há como consultá-lo depois.</p>
 </tr>
 <tr>
 <td><code>--mint-only</code></td>
-<td>Só imprime o segredo, sem trocar a sessão local do <code>tn</code> pela chave.</td>
+<td>Só imprime o segredo, sem trocar a chave local do <code>tn</code> pela nova.</td>
 <td>Desligado</td>
 </tr>
 </tbody>
 </table></div>
 <div class="admonition warning">
-<p class="admonition-title">Sem --mint-only, o tn passa a usar a chave</p>
-<p>Por padrão, <code>tn orgs api-keys create</code> troca a sessão local do seu
-computador pela chave recém-criada. A partir daí o <code>tn</code> age com o papel
-da chave, não com o seu. Para só gerar a chave e continuar com a sua
-sessão, use <code>--mint-only</code>.</p>
+<p class="admonition-title">Sem --mint-only, o tn passa a usar a nova chave</p>
+<p>Por padrão, <code>tn orgs api-keys create</code> troca a chave guardada no seu
+computador pela recém-criada. A partir daí o <code>tn</code> age com o papel da nova
+chave. Para só gerar a chave e manter a atual, use <code>--mint-only</code>.</p>
 </div>
 <p>Dê à chave o menor papel que resolve a tarefa. Uma chave <code>field</code>, por
 exemplo, serve para ler projetos e formulários sem conseguir alterar
@@ -1080,7 +1079,7 @@ catálogos.</p>
 <p>Uma chave que expirou para de funcionar no primeiro uso depois da data e
 some da lista em seguida.</p>
 <h3 id="usar-a-chave-em-scripts">Usar a chave em scripts<a class="headerlink" href="#usar-a-chave-em-scripts" title="Permanent link">&para;</a></h3>
-<p>A chave entra no lugar do token de login. No <code>tn</code>, defina a variável de
+<p>No <code>tn</code>, guarde a chave com <code>tn config set-token</code> ou defina a variável de
 ambiente <code>TN_TOKEN</code> com o segredo; na API, envie-o no cabeçalho
 <code>Authorization: Bearer</code>. Como a chave pertence a uma única organização, não
 é preciso informar a organização em cada chamada. Detalhes e exemplos estão

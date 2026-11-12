@@ -967,8 +967,7 @@
 <p>A linha de comando serve para automatizar o que seria repetitivo no web app,
 como enviar dezenas de arquivos, convidar uma lista de pessoas ou integrar o
 terranode a um pipeline. Tudo o que ela faz também pode ser feito pela API.</p>
-<p><code>tn</code> é o cliente de linha de comando do terranode. Com ele você entra na sua
-conta, administra membros, convites, chaves de API e dispositivos da
+<p><code>tn</code> é o cliente de linha de comando do terranode. Com ele você administra membros, convites, chaves de API e dispositivos da
 organização, cria catálogos, envia arquivos, cria e acompanha projetos e
 configura webhooks a partir de um terminal ou de um script. Tudo o que o <code>tn</code> faz passa pela mesma API pública descrita em
 <a href="../api/">API e SDK</a>.</p>
@@ -979,9 +978,11 @@ não vai encontrá-lo. Peça o acesso ao seu contato no terranode. Ele requer
 Python 3.12 ou mais novo.</p>
 </div>
 <h2 id="quem-pode-usar">Quem pode usar<a class="headerlink" href="#quem-pode-usar" title="Permanent link">&para;</a></h2>
-<p>Qualquer membro da organização pode entrar e consultar a própria identidade.
-O que cada comando exige depende do papel do membro (ou da chave de API) que
-está autenticado. A matriz completa está em
+<p>O <code>tn</code> usa uma chave de API da organização, e o plano da organização precisa
+incluir acesso à API. Sem ele, todo comando que lê ou altera dados da
+organização termina com o erro do plano e código 1 (<code>tn auth whoami</code> e
+<code>tn orgs list</code> continuam respondendo); a chave volta a funcionar quando o plano voltar a incluir o acesso.
+O que cada comando exige depende do papel da chave. A matriz completa está em
 <a href="../../organizacao/papeis-e-permissoes/">Papéis e permissões</a>.</p>
 <div class="table-wrapper"><table>
 <thead>
@@ -1064,27 +1065,23 @@ está autenticado. A matriz completa está em
 <p>Os comandos <code>tn webhooks</code> exigem a permissão <code>webhook:manage</code>, que só o papel
 Gestor tem; uma chave de API com papel <code>owner</code> também pode usá-los. Para
 qualquer outro papel, todos eles terminam com <code>Error:</code> e código 1.</p>
-<h2 id="entrar">Entrar<a class="headerlink" href="#entrar" title="Permanent link">&para;</a></h2>
+<h2 id="configurar-a-chave">Configurar a chave<a class="headerlink" href="#configurar-a-chave" title="Permanent link">&para;</a></h2>
 <p>Depois de instalar, o <code>tn</code> aponta para <code>http://localhost:8000</code>, o endereço de
 desenvolvimento local. Antes de qualquer outro comando, informe o endereço da
-API que o terranode passou para você e entre:</p>
+API que o terranode passou para você e a chave de API:</p>
 <div class="codehilite"><pre><span></span><code>tn<span class="w"> </span>config<span class="w"> </span>set-url<span class="w"> </span>https://&lt;endereco-da-api&gt;
-tn<span class="w"> </span>auth<span class="w"> </span>login
+tn<span class="w"> </span>config<span class="w"> </span>set-token<span class="w">            </span><span class="c1"># pede a chave sem ecoar</span>
 </code></pre></div>
-<p>O login pede e-mail e senha e guarda um token próprio no arquivo de
-configuração (veja abaixo). Esse token vale por 30 dias; depois disso o <code>tn</code>
-responde com um erro de autenticação e basta entrar de novo. Ele é
-independente da sessão do navegador, mas redefinir a senha encerra todos os
-tokens da conta, inclusive o do <code>tn</code> (veja <a href="../../organizacao/conta/">Sua conta</a>).</p>
-<p>Ao entrar, o <code>tn</code> escolhe a organização sozinho quando você pertence a uma só.
-Se pertence a várias, ele lista todas e pede que você escolha uma com
-<code>tn config set-org &lt;org&gt;</code>. <code>tn auth whoami</code> mostra quem você é, suas
-organizações e o que pode fazer em cada uma. <code>tn auth logout</code> revoga o token
-no servidor (quando consegue) e sempre o apaga do arquivo local.</p>
-<p>Para scripts, pipelines de CI ou servidores, não use sua senha pessoal: crie
-uma chave de API com <code>tn orgs api-keys create</code> e use-a como token. O que é uma
-chave, validade e revogação estão em
+<p>O <code>tn</code> não entra com e-mail e senha. A chave é criada por um Gestor: com
+<code>tn orgs api-keys create</code>, usando uma chave de papel <code>owner</code> já configurada, ou
+pela API (<code>POST /api/v1/auth/api-keys</code>). O que é uma chave, validade e
+revogação estão em
 <a href="../../organizacao/chaves-e-dispositivos/">Chaves de API e dispositivos</a>.</p>
+<p>Uma chave pertence a uma só organização, então o <code>set-token</code> define a
+organização sozinho. O que o <code>tn</code> faz fica registrado em nome da chave, não da
+pessoa. <code>tn auth whoami</code> mostra a identidade da chave, sua organização e o que
+ela pode fazer. <code>tn config unset-token</code> apaga a chave só deste computador; para
+revogá-la, use <code>tn orgs api-keys revoke</code>.</p>
 <h2 id="arquivo-de-configuracao-e-variaveis-de-ambiente">Arquivo de configuração e variáveis de ambiente<a class="headerlink" href="#arquivo-de-configuracao-e-variaveis-de-ambiente" title="Permanent link">&para;</a></h2>
 <p>O <code>tn</code> guarda a configuração em <code>~/.config/tn/config.json</code> (no Linux; em outros
 sistemas, na pasta de configuração padrão do usuário). O arquivo é criado com
@@ -1105,7 +1102,7 @@ permissão só para o seu usuário (modo <code>0600</code>) e tem três chaves:<
 </tr>
 <tr>
 <td><code>token</code></td>
-<td>Token de login ou chave de API</td>
+<td>Chave de API</td>
 <td>vazio</td>
 </tr>
 <tr>
@@ -1122,20 +1119,18 @@ o primeiro desta lista:</p>
 <li>Variável de ambiente: <code>TN_API_URL</code>, <code>TN_TOKEN</code>, <code>TN_ORG</code>.</li>
 <li>O arquivo de configuração.</li>
 </ol>
-<p>Duas variáveis a mais servem só para <code>tn auth login</code>: <code>TN_EMAIL</code> e
-<code>TN_PASSWORD</code> dispensam os prompts de e-mail e senha. Para tokens e senhas,
-prefira variáveis de ambiente às flags, para o segredo não ficar no histórico
-do shell.</p>
-<p>Os comandos <code>tn config</code> editam o arquivo sem passar pelo login:</p>
+<p>Para a chave, prefira a variável de ambiente à flag, para o segredo não ficar
+no histórico do shell.</p>
+<p>Os comandos <code>tn config</code> editam o arquivo:</p>
 <div class="codehilite"><pre><span></span><code>tn<span class="w"> </span>config<span class="w"> </span>show<span class="w">                 </span><span class="c1"># mostra api_url e org; o token aparece só como &quot;set&quot;</span>
 tn<span class="w"> </span>config<span class="w"> </span>set-url<span class="w"> </span>&lt;url&gt;
 tn<span class="w"> </span>config<span class="w"> </span>set-token<span class="w">            </span><span class="c1"># sem argumento, pede o token sem ecoar</span>
+tn<span class="w"> </span>config<span class="w"> </span>unset-token<span class="w">          </span><span class="c1"># apaga o token do arquivo, sem revogar a chave</span>
 tn<span class="w"> </span>config<span class="w"> </span>set-org<span class="w"> </span>&lt;org&gt;
 </code></pre></div>
-<p><code>set-token</code> é o jeito de instalar uma chave de API em outra máquina. Ele tenta
-resolver a organização como o login faz; se não conseguir (sem rede, token
-inválido), o token é salvo mesmo assim e você define a organização com
-<code>set-org</code>.</p>
+<p><code>set-token</code> tenta resolver a organização pela chave; se não conseguir (sem
+rede, token inválido), o token é salvo mesmo assim e você define a
+organização com <code>set-org</code>.</p>
 <h2 id="flags-globais-saida-e-erros">Flags globais, saída e erros<a class="headerlink" href="#flags-globais-saida-e-erros" title="Permanent link">&para;</a></h2>
 <p>As flags globais vão entre <code>tn</code> e o comando:</p>
 <div class="table-wrapper"><table>
@@ -1172,7 +1167,7 @@ indicada para scripts:</p>
 </code></pre></div>
 <p>Erros saem em <code>stderr</code> como <code>Error: &lt;mensagem&gt;</code> e o comando termina com
 código 1. Um erro de autenticação (token ausente, expirado ou revogado) vem
-com a dica de rodar <code>tn auth login</code> ou definir <code>TN_TOKEN</code>.</p>
+com a dica de rodar <code>tn config set-token</code> ou definir <code>TN_TOKEN</code>.</p>
 <p><code>tn</code> sem comando mostra a ajuda, e <code>tn &lt;comando&gt; --help</code> mostra a ajuda daquele
 comando. <code>tn --install-completion</code> instala o autocompletar do seu shell.</p>
 <h2 id="refs-id-ou-slug">Refs: id ou slug<a class="headerlink" href="#refs-id-ou-slug" title="Permanent link">&para;</a></h2>
@@ -1185,8 +1180,8 @@ app, como <code>RDO-DNIT097-00139</code>.</p>
 <p>Slugs são mais fáceis de digitar, mas podem mudar quando alguém renomeia o
 recurso. Em scripts de longa duração, use ids.</p>
 <h2 id="arvore-de-comandos">Árvore de comandos<a class="headerlink" href="#arvore-de-comandos" title="Permanent link">&para;</a></h2>
-<div class="codehilite"><pre><span></span><code>tn auth         login [--email] [--password] | logout | whoami
-tn config       show | set-url &lt;url&gt; | set-token [token] | set-org &lt;org&gt;
+<div class="codehilite"><pre><span></span><code>tn auth         whoami
+tn config       show | set-url &lt;url&gt; | set-token [token] | unset-token | set-org &lt;org&gt;
 tn orgs         list
 tn orgs members       list | set-role &lt;email&gt; &lt;papel&gt; | remove &lt;email&gt;
 tn orgs invitations   list | create EMAIL... --role &lt;papel&gt; | resend &lt;email&gt; | revoke &lt;email&gt;
@@ -1263,11 +1258,11 @@ tn<span class="w"> </span>orgs<span class="w"> </span>devices<span class="w"> </
 validade é 365 dias (<code>--expires-in-days</code>, até 3650; <code>--no-expiry</code> para nunca
 expirar).</p>
 <div class="admonition warning">
-<p class="admonition-title">Criar uma chave troca o seu login local</p>
-<p>Sem <code>--mint-only</code>, <code>tn orgs api-keys create</code> substitui o token guardado
-nesta máquina pela chave recém-criada: a partir daí o <code>tn</code> age como a
-chave, não como você. Use <code>--mint-only</code> quando a chave for para outro
-lugar (CI, outro servidor) e você quiser continuar logado aqui. No
+<p class="admonition-title">Criar uma chave troca a chave local</p>
+<p>Sem <code>--mint-only</code>, <code>tn orgs api-keys create</code> substitui a chave guardada
+nesta máquina pela recém-criada: a partir daí o <code>tn</code> age com o papel da
+nova chave. Use <code>--mint-only</code> quando a chave for para outro lugar (CI,
+outro servidor) e você quiser manter a chave atual aqui. No
 destino, defina <code>TN_TOKEN</code> e <code>TN_ORG</code>.</p>
 </div>
 <h3 id="catalogos">Catálogos<a class="headerlink" href="#catalogos" title="Permanent link">&para;</a></h3>
@@ -1948,8 +1943,8 @@ perder mensagens. Depois disso, só o novo vale.</p>
         
 
         
-        <a href="#entrar" data-active="false" data-depth="2">
-            Entrar
+        <a href="#configurar-a-chave" data-active="false" data-depth="2">
+            Configurar a chave
         </a>
         
 
