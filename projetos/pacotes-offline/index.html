@@ -1002,10 +1002,11 @@ gerencia não precisa publicar nada: basta manter o projeto em dia.</p>
 <p>O pacote é o que o app de campo baixa para trabalhar sem conexão: o mapa
 base e as camadas do projeto, recortados pela área de cobertura, mais os
 arquivos que o mapa precisa para desenhar. Ele é gerado pelo terranode, sem
-ação sua, sempre que algo relevante do projeto muda. A aba <strong>Pacotes</strong> da
-página do projeto mostra o andamento e o histórico.</p>
+ação sua, sempre que algo relevante do projeto muda. O cartão <strong>Pacote para
+o campo</strong>, na aba <strong>Configurações</strong> da página do projeto, mostra o andamento;
+<strong>Ver histórico</strong> abre o histórico completo.</p>
 <h2 id="quem-pode">Quem pode<a class="headerlink" href="#quem-pode" title="Permanent link">&para;</a></h2>
-<p>Todos os membros da organização veem a aba <strong>Pacotes</strong>. Os botões
+<p>Todos os membros da organização veem o cartão <strong>Pacote para o campo</strong>. Os botões
 <strong>Verificar agora</strong> e <strong>Tentar novamente</strong> aparecem só para quem pode editar
 o projeto (permissão de editar e ser criador ou gestor do projeto, veja
 <a href="../../organizacao/papeis-e-permissoes/">Papéis e permissões</a>). Baixar o
@@ -1055,7 +1056,7 @@ download, de acordo com o papel e os registros dela no projeto. Assim duas
 pessoas podem baixar a mesma versão do pacote e ver formulários diferentes.</p>
 <h2 id="quando-o-pacote-e-gerado">Quando o pacote é gerado<a class="headerlink" href="#quando-o-pacote-e-gerado" title="Permanent link">&para;</a></h2>
 <p>Só projetos <strong>Em andamento</strong> com área de cobertura têm pacote. Um rascunho,
-ou um projeto sem área, mostra na aba a mensagem "Os pacotes para o app de
+ou um projeto sem área, mostra no cartão a mensagem "Os pacotes para o app de
 campo são gerados só para projetos em andamento com área definida." Veja
 <a href="../#estados-do-projeto">Estados do projeto</a>.</p>
 <p>Uma nova verificação é agendada quando muda:</p>
@@ -1067,8 +1068,8 @@ campo são gerados só para projetos em andamento com área definida." Veja
 <li>o mapa base do terranode.</li>
 </ul>
 <p>A verificação roda cerca de 2 minutos depois da última mudança: várias
-alterações seguidas geram uma única verificação. A aba mostra a contagem
-<strong>Nova versão gerando em ...</strong> e depois <strong>Preparando nova versão…</strong>.</p>
+alterações seguidas geram uma única verificação. O cartão mostra a contagem
+<strong>Nova versão em ...</strong> e depois <strong>Preparando nova versão…</strong>.</p>
 <p>Na verificação, o terranode compara o conteúdo com a versão atual. Se nada
 mudou de fato, nenhuma versão nova é criada. Se mudou, uma nova versão é
 gerada, reaproveitando os arquivos que continuam iguais (estado
@@ -1080,8 +1081,20 @@ gerada, reaproveitando os arquivos que continuam iguais (estado
 de área, camadas e formulários antes de publicar, em vez de salvar aos
 poucos ao longo do dia.</p>
 </div>
-<h2 id="a-aba-pacotes">A aba Pacotes<a class="headerlink" href="#a-aba-pacotes" title="Permanent link">&para;</a></h2>
-<p>Enquanto uma versão nova é gerada, uma faixa no topo da aba mostra "Gerando
+<h2 id="o-cartao-pacote-para-o-campo">O cartão Pacote para o campo<a class="headerlink" href="#o-cartao-pacote-para-o-campo" title="Permanent link">&para;</a></h2>
+<p>O cartão fica na coluna da direita da aba <strong>Configurações</strong>, acima de
+<strong>Exportações</strong>. O título diz qual versão o app baixa ("v7 disponível") e as
+linhas abaixo mostram:</p>
+<ul>
+<li><strong>Tamanho</strong>, <strong>Gerada em</strong> e <strong>Arquivos</strong> (quantos estão prontos);</li>
+<li><strong>Baixado por</strong>: quantas pessoas da equipe têm o pacote, com uma barra.</li>
+</ul>
+<p>Enquanto uma versão nova é gerada, o cartão mostra "Gerando a vN" e quantos
+arquivos já estão prontos. Se a versão falhar ou travar, ele diz isso.
+<strong>Verificar agora</strong> e <strong>Tentar novamente</strong> ficam no pé do cartão.</p>
+<p><strong>Ver histórico</strong> abre a tela completa do pacote em uma janela sobre a página.</p>
+<h2 id="a-tela-completa-do-pacote">A tela completa do pacote<a class="headerlink" href="#a-tela-completa-do-pacote" title="Permanent link">&para;</a></h2>
+<p>Enquanto uma versão nova é gerada, uma faixa no topo da tela mostra "Gerando
 nova versão N", quantos arquivos já estão prontos e com qual versão o app
 continua até lá. Se a versão falhar ou travar, a mesma faixa diz o que
 aconteceu e, para quem pode editar, oferece <strong>Tentar novamente</strong>.</p>
@@ -1090,7 +1103,8 @@ aconteceu e, para quem pode editar, oferece <strong>Tentar novamente</strong>.</
 <ul>
 <li><strong>Tamanho</strong>, <strong>Gerada em</strong> e <strong>Arquivos</strong> (quantos estão prontos);</li>
 <li><strong>Pacote baixado</strong>: quantas pessoas da equipe têm o pacote do projeto em um
-  aparelho ativo, com o atalho <strong>Ver equipe</strong>. A contagem é por pessoa e vale
+  aparelho ativo, com o atalho <strong>Ver equipe</strong>, que fecha a janela e leva ao
+  cartão <strong>Equipe</strong>. A contagem é por pessoa e vale
   para qualquer versão do pacote, como o cartão <strong>Equipe agora</strong> da visão
   geral;</li>
 <li><strong>Composição</strong>: quanto do pacote são PMTiles, dividido em mapa base, camadas
@@ -1141,10 +1155,10 @@ direita. A tela atualiza sozinha enquanto a versão é gerada.</p>
   uma nova verificação; a versão nova reaproveita os arquivos que ficaram
   prontos.</li>
 <li><strong>Verificar agora</strong> força a verificação sem esperar os 2 minutos. Se não
-  for possível no momento, a aba avisa "Não foi possível gerar uma nova
+  for possível no momento, a tela avisa "Não foi possível gerar uma nova
   versão agora."</li>
 </ul>
-<!-- screenshot: a aba Pacotes com uma versão Disponível para o campo, uma Substituída e a lista de arquivos aberta -->
+<!-- screenshot: a tela completa do pacote com uma versão Disponível para o campo, uma Substituída e a lista de arquivos aberta -->
 
 <h2 id="como-o-app-baixa">Como o app baixa<a class="headerlink" href="#como-o-app-baixa" title="Permanent link">&para;</a></h2>
 <p>O app baixa a versão <strong>Disponível</strong> e confirma o download; a partir daí o
@@ -1560,8 +1574,14 @@ forma mais direta de reduzir o download no campo.</p>
         
 
         
-        <a href="#a-aba-pacotes" data-active="false" data-depth="2">
-            A aba Pacotes
+        <a href="#o-cartao-pacote-para-o-campo" data-active="false" data-depth="2">
+            O cartão Pacote para o campo
+        </a>
+        
+
+        
+        <a href="#a-tela-completa-do-pacote" data-active="false" data-depth="2">
+            A tela completa do pacote
         </a>
         
 
